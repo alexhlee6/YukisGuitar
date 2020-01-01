@@ -1,4 +1,5 @@
 import React from "react";
+import Column from "./Column";
 
 class Stage extends React.Component {
   constructor(props) {
@@ -8,12 +9,18 @@ class Stage extends React.Component {
       // allColumns: []
       loading: true
     }
-    this.createColumns();
+    // this.createColumns();
   }
 
   componentDidMount() {
-    this.setState({ playing: true, score: 0, loading: false});
+    this.setState({ playing: true, score: 0, loading: false });
     this.registerEvents();
+  }
+
+  componentDidUpdate() {
+    if (!this.state.loading && document.getElementById("column-1")) {
+      this.drawColumns();
+    }
   }
 
   registerEvents() {
@@ -43,8 +50,13 @@ class Stage extends React.Component {
     }
   }
 
-  createColumns() {
-
+  drawColumns() {
+    let allCtx = {};
+    let ids = [1, 2, 3, 4];
+    ids.forEach(id => {
+      let canvas = document.getElementById(id);
+      
+    })
   }
 
   animate(ctx) {

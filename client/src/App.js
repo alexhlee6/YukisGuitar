@@ -5,7 +5,7 @@ const App = () =>  {
   return (
     <div className="App">
       {/* <h1>Given</h1> */}
-      <div class="stage-background">
+      <div className="stage-background">
         <Game />
         {/* <canvas id="game-canvas" width="375" height="600"></canvas> */}
       </div>
