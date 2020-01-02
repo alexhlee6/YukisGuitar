@@ -41,7 +41,7 @@ h2 {
 
 .stage-curtain {
   width: 100%;
-  height: calc(100% - 165px);
+  height: calc(100% - 180px);
   background: linear-gradient(black, transparent);
   z-index: 3;
   position: relative;

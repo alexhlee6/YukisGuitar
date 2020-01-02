@@ -20,7 +20,6 @@ export default class Column {
     this.started = false;
     this.playing = false;
     this.allNotes = [];
-    // this.timeLogs=[];
     this.timeLogs = [...Log[colNum]];
     this.animate(ctx);
   }
@@ -37,7 +36,6 @@ export default class Column {
   }
 
   pauseColumn() {
-    // console.log("PAUSE COLUMN");
     cancelAnimationFrame(this.requestedAnimation);
     this.requestedAnimation = () => requestAnimationFrame(this.animate.bind(this));
     this.playing = false;
@@ -45,7 +43,6 @@ export default class Column {
   }
 
   playColumn() {
-    // console.log("PLAY COLUMN");
     requestAnimationFrame(this.requestedAnimation);
     this.playNotes();
     this.playing = true;
@@ -67,7 +64,7 @@ export default class Column {
       newNotes.push(note);
     });
     this.timeLogs.forEach(log => {
-      if (window.audioPlayer.currentTime + 2.540 >= log) {
+      if (window.audioPlayer.currentTime + 3.32 >= log) {
         let newNote = new Note(this.color, this);
         newNotes.push(newNote);
       } else {

@@ -38,7 +38,6 @@ class Stage extends React.Component {
   registerEvents() {
     document.addEventListener("keydown", (e) => {
       this.handleKey(e.keyCode, "keydown");
-      // console.log(e.keyCode);
     });
     document.addEventListener("keyup", (e) => {
       this.handleKey(e.keyCode, "keyup");
@@ -76,28 +75,28 @@ class Stage extends React.Component {
     }
     switch (key) {
       case 72: 
-        console.log("H"); // col 1
+        // console.log("H"); // col 1
         $("#button-container-1").addClass("pressed");
         $("#key-1").addClass("pressed");
         this.checkScore(1);
         this.trackTime(1);
         break;
       case 74:
-        console.log("J"); // col 2
+        // console.log("J"); // col 2
         $("#button-container-2").addClass("pressed");
         $("#key-2").addClass("pressed");
         this.checkScore(2);
         this.trackTime(2);
         break;
       case 75:
-        console.log("K"); // col 3
+        // console.log("K"); // col 3
         $("#button-container-3").addClass("pressed");
         $("#key-3").addClass("pressed");
         this.checkScore(3);
         this.trackTime(3);
         break;
       case 76: 
-        console.log("L"); // col 4
+        // console.log("L"); // col 4
         $("#button-container-4").addClass("pressed");
         $("#key-4").addClass("pressed");
         this.checkScore(4);
@@ -157,34 +156,25 @@ class Stage extends React.Component {
     let pointsEarned = this.state.score.totalPoints;
     if (!noteY) return null;
     
-    if (noteY >= 480 && noteY <= 520) {
+    if (noteY >= 580 && noteY <= 620) {
       console.log("perfect");
       pointsEarned += 3;
       column.removeNote(colNotes[0]);
-      // colNotes.shift();
       let perfectCount = this.state.score.perfect;
       let newScoreState = Object.assign({},this.state.score);
       newScoreState["perfect"] = perfectCount + 1;
       newScoreState["totalPoints"] = pointsEarned;
       this.setState({ score: newScoreState });
-    } else if (noteY >= 460 && noteY <= 540) {
+    } else if (noteY >= 560 && noteY <= 640) {
       console.log("good");
       pointsEarned += 2;
       column.removeNote(colNotes[0]);
-      // colNotes.shift();
       let goodCount = this.state.score.good;
       let newScoreState = Object.assign({}, this.state.score);
       newScoreState["good"] = goodCount + 1;
       newScoreState["totalPoints"] = pointsEarned;
-      this.setState({
-        score: 
-          newScoreState
-          // good: this.state.score.good + 1,
-          // totalPoints: pointsEarned
-        
-      });
-      // this.setState({ score: this.state.score + 2 });
-    } else if (noteY >= 400 && noteY <= 600 ) {
+      this.setState({ score: newScoreState });
+    } else if (noteY >= 500 && noteY <= 700 ) {
       console.log("bad");
       pointsEarned += 1;
       column.removeNote(colNotes[0]);
@@ -192,16 +182,8 @@ class Stage extends React.Component {
       let newScoreState = Object.assign({}, this.state.score);
       newScoreState["bad"] = badCount + 1;
       newScoreState["totalPoints"] = pointsEarned;
-      // colNotes.shift();
-      this.setState({
-        score: 
-          newScoreState
-          // bad: this.state.score.bad + 1,
-          // totalPoints: pointsEarned
-        
-      });
+      this.setState({ score: newScoreState });
     }
-    // this.setState({ score: (this.state.score + pointsEarned) });
   }
 
   notifyMiss() {
@@ -220,28 +202,28 @@ class Stage extends React.Component {
           ) : (
             <div className = "all-columns">
               <div className="column-container column-1">
-                <canvas id="column-1" width="93.75" height="500" />
+                <canvas id="column-1" width="93.75" height="600" />
                 <div className="button-container" id="button-container-1">
                   <div className="button-key-binding" id="key-1"><span id="key-span-1">H</span></div>
                   <img className="button" src={ process.env.PUBLIC_URL + '/images/haru.jpg' } />
                 </div>
               </div>
               <div className="column-container column-2">
-                <canvas id="column-2" width="93.75" height="500" />
+                <canvas id="column-2" width="93.75" height="600" />
                 <div className="button-container" id="button-container-2">
                     <div className="button-key-binding" id="key-2"><span id="key-span-2">J</span></div>
                   <img className="button" src={process.env.PUBLIC_URL + '/images/ueno.jpg'} />
                 </div>
               </div>
               <div className="column-container column-3">
-                <canvas id="column-3" width="93.75" height="500" />
+                <canvas id="column-3" width="93.75" height="600" />
                 <div className="button-container" id="button-container-3">
                   <div className="button-key-binding" id="key-3"><span id="key-span-3">K</span></div>
                   <img className="button" src={process.env.PUBLIC_URL + '/images/mafu.jpg'} />
                 </div>
               </div>
               <div className="column-container column-4">
-                <canvas id="column-4" width="93.75" height="500" />
+                <canvas id="column-4" width="93.75" height="600" />
                 <div className="button-container" id="button-container-4">
                     <div className="button-key-binding" id="key-4"><span id="key-span-4">L</span></div>
                   <img className="button" src={process.env.PUBLIC_URL + '/images/aki.jpg'} />

@@ -2,7 +2,7 @@ const NOTE_CONSTANTS = {
   width: 93.75,
   height: 40,
   speed: 6,
-  endY: 500
+  endY: 600
 }
 
 export default class Note {
@@ -16,6 +16,7 @@ export default class Note {
     this.color = color;
     this.endY = NOTE_CONSTANTS.endY;
     this.parentColumn = column;
+    
   }
 
   animate(ctx) {
@@ -30,9 +31,6 @@ export default class Note {
     if (this.outOfBounds()) {
       this.parentColumn.removeMissedNote(this);
     } // else if clicked (not out of bounds) then this.parentColumn.removeNote()
-    // if (this.y === 500) {
-      // console.log(window.audioPlayer.currentTime);
-    // }
   }
 
   moveNote(ctx) {
@@ -55,8 +53,8 @@ export default class Note {
   }
 
   outOfBounds() {
-    const endY = 650;
-    return (this.y > 600);
+    const endY = 600;
+    return (this.y > 700);
   }
 
 }
