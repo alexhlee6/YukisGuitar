@@ -12,7 +12,12 @@ class Stage extends React.Component {
       allCtx: {},
       allColumns: {},
       loading: true,
-      score: 0,
+      score: {
+        totalPoints: 0,
+        perfect: 0,
+        good: 0,
+        bad: 0,
+      },
       misses: 0,
       timeLog: {1: [], 2: [], 3: [], 4: []} //hold colNums and array of times recorded
     }
@@ -20,7 +25,7 @@ class Stage extends React.Component {
 
   componentDidMount() {
     this.registerEvents();
-    this.setState({ playing: false, score: 0, loading: false });
+    this.setState({ playing: false, loading: false });
   }
 
   componentDidUpdate() {
@@ -74,24 +79,28 @@ class Stage extends React.Component {
         console.log("H"); // col 1
         $("#button-container-1").addClass("pressed");
         $("#key-1").addClass("pressed");
+        this.checkScore(1);
         this.trackTime(1);
         break;
       case 74:
         console.log("J"); // col 2
         $("#button-container-2").addClass("pressed");
         $("#key-2").addClass("pressed");
+        this.checkScore(2);
         this.trackTime(2);
         break;
       case 75:
         console.log("K"); // col 3
         $("#button-container-3").addClass("pressed");
         $("#key-3").addClass("pressed");
+        this.checkScore(3);
         this.trackTime(3);
         break;
       case 76: 
         console.log("L"); // col 4
         $("#button-container-4").addClass("pressed");
         $("#key-4").addClass("pressed");
+        this.checkScore(4);
         this.trackTime(4);
         break;
       case 32: //SPACEBAR
@@ -139,8 +148,60 @@ class Stage extends React.Component {
     console.log(this.state);
   }
 
-  checkScore() {
-
+  checkScore(colNum) {
+    let column = this.state.allColumns[colNum];
+    let colNotes = column.allNotes;
+    let note = colNotes[0];
+    if (!note) return null;
+    let noteY = note.y;
+    let pointsEarned = this.state.score.totalPoints;
+    if (!noteY) return null;
+    
+    if (noteY >= 480 && noteY <= 520) {
+      console.log("perfect");
+      pointsEarned += 3;
+      column.removeNote(colNotes[0]);
+      // colNotes.shift();
+      let perfectCount = this.state.score.perfect;
+      let newScoreState = Object.assign({},this.state.score);
+      newScoreState["perfect"] = perfectCount + 1;
+      newScoreState["totalPoints"] = pointsEarned;
+      this.setState({ score: newScoreState });
+    } else if (noteY >= 460 && noteY <= 540) {
+      console.log("good");
+      pointsEarned += 2;
+      column.removeNote(colNotes[0]);
+      // colNotes.shift();
+      let goodCount = this.state.score.good;
+      let newScoreState = Object.assign({}, this.state.score);
+      newScoreState["good"] = goodCount + 1;
+      newScoreState["totalPoints"] = pointsEarned;
+      this.setState({
+        score: 
+          newScoreState
+          // good: this.state.score.good + 1,
+          // totalPoints: pointsEarned
+        
+      });
+      // this.setState({ score: this.state.score + 2 });
+    } else if (noteY >= 400 && noteY <= 600 ) {
+      console.log("bad");
+      pointsEarned += 1;
+      column.removeNote(colNotes[0]);
+      let badCount = this.state.score.bad;
+      let newScoreState = Object.assign({}, this.state.score);
+      newScoreState["bad"] = badCount + 1;
+      newScoreState["totalPoints"] = pointsEarned;
+      // colNotes.shift();
+      this.setState({
+        score: 
+          newScoreState
+          // bad: this.state.score.bad + 1,
+          // totalPoints: pointsEarned
+        
+      });
+    }
+    // this.setState({ score: (this.state.score + pointsEarned) });
   }
 
   notifyMiss() {

@@ -67,7 +67,7 @@ export default class Column {
       newNotes.push(note);
     });
     this.timeLogs.forEach(log => {
-      if (window.audioPlayer.currentTime + 3.940 >= log) {
+      if (window.audioPlayer.currentTime + 2.540 >= log) {
         let newNote = new Note(this.color, this);
         newNotes.push(newNote);
       } else {
@@ -89,6 +89,7 @@ export default class Column {
         allNotes.push(note);
       }
     });
+    this.ctx.clearRect(rmNote.x, rmNote.y, rmNote.dimensions.width, rmNote.dimensions.height);
     this.allNotes = allNotes;
   }
 

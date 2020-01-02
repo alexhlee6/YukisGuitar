@@ -67,35 +67,35 @@ h2 {
 }
 
 .column-1 .button-container {
-  border-top: 30px solid rgb(109, 39, 39);
+  border-top: 40px solid rgb(109, 39, 39);
 }
 
 .column-1 .button-container.pressed {
-  border-top: 30px solid rgb(172, 54, 54);
+  border-top: 40px solid rgb(172, 54, 54);
 }
 
 .column-2 .button-container {
-  border-top: 30px solid rgb(36, 50, 113);
+  border-top: 40px solid rgb(36, 50, 113);
 }
 
 .column-2 .button-container.pressed {
-  border-top: 30px solid rgb(58, 81, 214);
+  border-top: 40px solid rgb(58, 81, 214);
 }
 
 .column-3 .button-container {
-  border-top: 30px solid rgb(116, 68, 30);
+  border-top: 40px solid rgb(116, 68, 30);
 }
 
 .column-3 .button-container.pressed {
-  border-top: 30px solid rgb(198, 112, 46);
+  border-top: 40px solid rgb(198, 112, 46);
 }
 
 .column-4 .button-container {
-  border-top: 30px solid rgb(116, 113, 29);
+  border-top: 40px solid rgb(116, 113, 29);
 }
 
 .column-4 .button-container.pressed {
-  border-top: 30px solid rgb(202, 197, 52);
+  border-top: 40px solid rgb(202, 197, 52);
 }
 
 .button-container {

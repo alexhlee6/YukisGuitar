@@ -1,7 +1,7 @@
 const NOTE_CONSTANTS = {
   width: 93.75,
-  height: 30,
-  speed: 4,
+  height: 40,
+  speed: 6,
   endY: 500
 }
 
@@ -28,13 +28,11 @@ export default class Note {
 
   checkPos() {
     if (this.outOfBounds()) {
-      // console.log("OutOFBOUNDS");
-      // console.log(window.audioPlayer.currentTime);
       this.parentColumn.removeMissedNote(this);
     } // else if clicked (not out of bounds) then this.parentColumn.removeNote()
-    if(this.y === 500) {
+    // if (this.y === 500) {
       // console.log(window.audioPlayer.currentTime);
-    }
+    // }
   }
 
   moveNote(ctx) {
