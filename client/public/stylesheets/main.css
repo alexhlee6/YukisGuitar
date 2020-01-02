@@ -123,6 +123,7 @@ h2 {
   /* border: 6px solid rgb(129, 59, 59);
   border-top: 6px solid rgb(94, 49, 49); */
   border-style: outset;
+  background-color: rgba(0, 0, 0, 0.26);
 }
 
 .column-2 .button-key-binding {
@@ -141,6 +142,12 @@ h2 {
   /* border: 6px solid rgb(151, 144, 64);
   border-top: 6px solid rgb(131, 125, 66); */
   border-style: outset;
+}
+
+#key-1.pressed, #key-2.pressed, #key-3.pressed, #key-4.pressed  {
+  border: 6px solid rgb(77, 77, 77);
+  border-style: inset;
+  background-color: transparent;
 }
 
 .button-key-binding >span {
