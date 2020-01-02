@@ -7,10 +7,13 @@ class Stage extends React.Component {
     super(props);
     this.state = {
       playing: false,
-      // started: false,
+      songUrl: "https://www.dl.dropboxusercontent.com/s/x0fu4c23xtonypi/MARUTSUKE.mp3?dl=0",
       allCtx: {},
       allColumns: {},
-      loading: true
+      loading: true,
+      score: 0,
+      misses: 0,
+      timeLog: {1: [], 2: [], 3: [], 4: []} //hold colNums and array of times recorded
     }
   }
 
@@ -29,27 +32,41 @@ class Stage extends React.Component {
   registerEvents() {
     document.addEventListener("keydown", (e) => {
       this.handleKey(e.keyCode);
-    })
+      // console.log(e.keyCode);
+    });
+    window.audioPlayer = document.getElementById("audio-player");
+    window.audioPlayer.load();
+    window.audioPlayer.volume = 0.4;
+  }
+
+  trackTime(colNum) {
+    let newLog = Object.assign({}, this.state.timeLog);
+    newLog[colNum].push(window.audioPlayer.currentTime);
+    this.setState({ timeLog: newLog });
   }
 
   handleKey(key) {
     switch (key) {
-      case 65: 
-        console.log("A"); // col 1
+      case 74: 
+        console.log("J"); // col 1
+        this.trackTime(1);
         break;
-      case 83:
-        console.log("S"); // col 2
+      case 75:
+        console.log("K"); // col 2
+        this.trackTime(2);
         break;
-      case 68:
-        console.log("D"); // col 3
+      case 76:
+        console.log("L"); // col 3
+        this.trackTime(3);
         break;
-      case 70: 
-        console.log("F"); // col 4
+      case 186: 
+        console.log(";"); // col 4
+        this.trackTime(4);
         break;
       case 32: //SPACEBAR
-        if (!this.state.playing) {
+        if (window.audioPlayer.paused) {
           this.playColumns();
-        } else if (this.state.playing) {
+        } else if (window.audioPlayer.src && !window.audioPlayer.paused) {
           this.pauseColumns();
         }
         break;
@@ -67,12 +84,13 @@ class Stage extends React.Component {
       let ctx = canvas.getContext("2d");
       allCtx[colNum] = ctx;
 
-      allColumns[colNum] = new Column(ctx, colNum);
+      allColumns[colNum] = new Column(ctx, colNum, this.notifyMiss.bind(this));
     });
     this.setState({ allCtx, allColumns });
   }
 
   playColumns() {
+    window.audioPlayer.play();
     Object.values(this.state.allColumns).forEach(col => {
       col.playColumn();
     });
@@ -80,16 +98,28 @@ class Stage extends React.Component {
   }
 
   pauseColumns() {
+    window.audioPlayer.pause();
     Object.values(this.state.allColumns).forEach(col => {
       col.pauseColumn();
     });
     this.setState({ playing: false });
+    console.log(this.state);
+  }
+
+  checkScore() {
+
+  }
+
+  notifyMiss() {
+    let missCount = this.state.misses;
+    this.setState({ misses: missCount + 1 });
   }
 
   render() {
     return (
       <div className="stage-main">
         <div className="stage-curtain"></div>
+        <audio id="audio-player" src={this.state.songUrl}></audio>
         {
           this.state.loading && Object.keys(this.state.allCtx).length > 0 ? (
             null
