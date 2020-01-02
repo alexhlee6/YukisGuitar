@@ -66,23 +66,23 @@ h2 {
   overflow-x: hidden;
 }
 
-.column-1 .baby {
+.column-1 .button {
   border-top: 20px solid rgb(131, 43, 43);
 }
 
-.column-2 .baby {
+.column-2 .button {
   border-top: 20px solid rgb(54, 40, 121);
 }
 
-.column-3 .baby {
+.column-3 .button {
   border-top: 20px solid rgb(176, 89, 42);
 }
 
-.column-4 .baby {
+.column-4 .button {
   border-top: 20px solid rgb(176, 174, 61);
 }
 
-.baby {
+.button {
   max-width: 150px;
   width: 100%;
   height: 165px;
