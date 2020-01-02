@@ -53,15 +53,19 @@ class Stage extends React.Component {
     if (type === "keyup") {
       if (key === 72) {
         $("#button-container-1").removeClass("pressed");
+        $("#key-1").removeClass("pressed");
         return;
       } else if (key === 74) {
         $("#button-container-2").removeClass("pressed");
+        $("#key-2").removeClass("pressed");
         return;
       } else if (key === 75) {
         $("#button-container-3").removeClass("pressed");
+        $("#key-3").removeClass("pressed");
         return;
       } else if (key === 76) {
         $("#button-container-4").removeClass("pressed");
+        $("#key-4").removeClass("pressed");
         return;
       }
     }
@@ -69,21 +73,25 @@ class Stage extends React.Component {
       case 72: 
         console.log("H"); // col 1
         $("#button-container-1").addClass("pressed");
+        $("#key-1").addClass("pressed");
         this.trackTime(1);
         break;
       case 74:
         console.log("J"); // col 2
         $("#button-container-2").addClass("pressed");
+        $("#key-2").addClass("pressed");
         this.trackTime(2);
         break;
       case 75:
         console.log("K"); // col 3
         $("#button-container-3").addClass("pressed");
+        $("#key-3").addClass("pressed");
         this.trackTime(3);
         break;
       case 76: 
         console.log("L"); // col 4
         $("#button-container-4").addClass("pressed");
+        $("#key-4").addClass("pressed");
         this.trackTime(4);
         break;
       case 32: //SPACEBAR

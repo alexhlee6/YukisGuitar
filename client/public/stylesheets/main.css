@@ -143,6 +143,12 @@ h2 {
   border-style: outset;
 }
 
+#key-1.pressed, #key-2.pressed, #key-3.pressed, #key-4.pressed  {
+  border: 6px solid rgb(77, 77, 77);
+  border-style: inset;
+  background-color: transparent;
+}
+
 .button-key-binding >span {
   margin-bottom: 5px;
 }
