@@ -1,5 +1,5 @@
 # *Given Game*
-A rhythm game similar to Guitar Hero where players will score points by accurately pressing keys to the timing of game prompts and music.  
+A rhythm game similar to Guitar Hero where players will score points by accurately pressing keys to the timing of the game prompts and music.  
 
 
 ## MVP
@@ -13,7 +13,8 @@ A rhythm game similar to Guitar Hero where players will score points by accurate
 1. Javascript 
 2. HTML (with Canvas)
 3. CSS
-4. *React?*
+4. React
+5. JQuery
 
 Possible challenges include timing the game prompts to correctly fall into position at the correct time and matching the prompts and player responses with the stage music.
 
