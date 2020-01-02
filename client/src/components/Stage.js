@@ -1,6 +1,7 @@
 import React from "react";
 import Column from "./Column";
 import Note from "./Note";
+import $ from "jquery";
 
 class Stage extends React.Component {
   constructor(props) {
@@ -31,9 +32,12 @@ class Stage extends React.Component {
 
   registerEvents() {
     document.addEventListener("keydown", (e) => {
-      this.handleKey(e.keyCode);
+      this.handleKey(e.keyCode, "keydown");
       // console.log(e.keyCode);
     });
+    document.addEventListener("keyup", (e) => {
+      this.handleKey(e.keyCode, "keyup");
+    })
     window.audioPlayer = document.getElementById("audio-player");
     window.audioPlayer.load();
     window.audioPlayer.volume = 0.4;
@@ -45,29 +49,50 @@ class Stage extends React.Component {
     this.setState({ timeLog: newLog });
   }
 
-  handleKey(key) {
+  handleKey(key, type) {
+    if (type === "keyup") {
+      if (key === 72) {
+        $("#button-container-1").removeClass("pressed");
+        return;
+      } else if (key === 74) {
+        $("#button-container-2").removeClass("pressed");
+        return;
+      } else if (key === 75) {
+        $("#button-container-3").removeClass("pressed");
+        return;
+      } else if (key === 76) {
+        $("#button-container-4").removeClass("pressed");
+        return;
+      }
+    }
     switch (key) {
-      case 74: 
-        console.log("J"); // col 1
+      case 72: 
+        console.log("H"); // col 1
+        $("#button-container-1").addClass("pressed");
         this.trackTime(1);
         break;
-      case 75:
-        console.log("K"); // col 2
+      case 74:
+        console.log("J"); // col 2
+        $("#button-container-2").addClass("pressed");
         this.trackTime(2);
         break;
-      case 76:
-        console.log("L"); // col 3
+      case 75:
+        console.log("K"); // col 3
+        $("#button-container-3").addClass("pressed");
         this.trackTime(3);
         break;
-      case 186: 
-        console.log(";"); // col 4
+      case 76: 
+        console.log("L"); // col 4
+        $("#button-container-4").addClass("pressed");
         this.trackTime(4);
         break;
       case 32: //SPACEBAR
-        if (window.audioPlayer.paused) {
-          this.playColumns();
-        } else if (window.audioPlayer.src && !window.audioPlayer.paused) {
-          this.pauseColumns();
+        if (type === "keydown") {
+          if (window.audioPlayer.paused) {
+            this.playColumns();
+          } else if (window.audioPlayer.src && !window.audioPlayer.paused) {
+            this.pauseColumns();
+          }
         }
         break;
     }
@@ -127,19 +152,31 @@ class Stage extends React.Component {
             <div className = "all-columns">
               <div className="column-container column-1">
                 <canvas id="column-1" width="93.75" height="500" />
-                <img className="button" src={ process.env.PUBLIC_URL + '/images/haru.jpg' } />
+                <div className="button-container" id="button-container-1">
+                  <div className="button-key-binding" id="key-1"><span id="key-span-1">H</span></div>
+                  <img className="button" src={ process.env.PUBLIC_URL + '/images/haru.jpg' } />
+                </div>
               </div>
               <div className="column-container column-2">
                 <canvas id="column-2" width="93.75" height="500" />
-                <img className="button" src={process.env.PUBLIC_URL + '/images/ueno.jpg'} />
+                <div className="button-container" id="button-container-2">
+                    <div className="button-key-binding" id="key-2"><span id="key-span-2">J</span></div>
+                  <img className="button" src={process.env.PUBLIC_URL + '/images/ueno.jpg'} />
+                </div>
               </div>
               <div className="column-container column-3">
                 <canvas id="column-3" width="93.75" height="500" />
-                <img className="button" src={process.env.PUBLIC_URL + '/images/mafu.jpg'} />
+                <div className="button-container" id="button-container-3">
+                  <div className="button-key-binding" id="key-3"><span id="key-span-3">K</span></div>
+                  <img className="button" src={process.env.PUBLIC_URL + '/images/mafu.jpg'} />
+                </div>
               </div>
               <div className="column-container column-4">
                 <canvas id="column-4" width="93.75" height="500" />
-                <img className="button" src={process.env.PUBLIC_URL + '/images/aki.jpg'} />
+                <div className="button-container" id="button-container-4">
+                    <div className="button-key-binding" id="key-4"><span id="key-span-4">L</span></div>
+                  <img className="button" src={process.env.PUBLIC_URL + '/images/aki.jpg'} />
+                </div>
               </div>
             </div>
           )

@@ -66,20 +66,85 @@ h2 {
   overflow-x: hidden;
 }
 
-.column-1 .button {
-  border-top: 30px solid rgb(131, 43, 43);
+.column-1 .button-container {
+  border-top: 30px solid rgb(109, 39, 39);
 }
 
-.column-2 .button {
-  border-top: 30px solid rgb(54, 40, 121);
+.column-1 .button-container.pressed {
+  border-top: 30px solid rgb(172, 54, 54);
 }
 
-.column-3 .button {
-  border-top: 30px solid rgb(176, 89, 42);
+.column-2 .button-container {
+  border-top: 30px solid rgb(36, 50, 113);
 }
 
-.column-4 .button {
-  border-top: 30px solid rgb(176, 174, 61);
+.column-2 .button-container.pressed {
+  border-top: 30px solid rgb(58, 81, 214);
+}
+
+.column-3 .button-container {
+  border-top: 30px solid rgb(116, 68, 30);
+}
+
+.column-3 .button-container.pressed {
+  border-top: 30px solid rgb(198, 112, 46);
+}
+
+.column-4 .button-container {
+  border-top: 30px solid rgb(116, 113, 29);
+}
+
+.column-4 .button-container.pressed {
+  border-top: 30px solid rgb(202, 197, 52);
+}
+
+.button-container {
+  max-width: 150px;
+  max-height: 140px;
+  position: relative;
+}
+
+.button-key-binding {
+  position: absolute;
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
+  color: rgba(255, 255, 255, 0.836);
+  text-shadow: 2px 2px 8px black, -1px -1px 8px black;
+  background-color: rgba(0, 0, 0, 0.192);
+  border: 6px solid rgb(77, 77, 77);
+  font-size: 50px;
+  text-align: center;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.column-1 .button-key-binding {
+  /* border: 6px solid rgb(129, 59, 59);
+  border-top: 6px solid rgb(94, 49, 49); */
+  border-style: outset;
+}
+
+.column-2 .button-key-binding {
+  /* border: 6px solid rgb(59, 75, 129);
+  border-top: 6px solid rgb(47, 53, 71); */
+  border-style: outset;
+}
+
+.column-3 .button-key-binding {
+  /* border: 6px solid rgb(151, 87, 64);
+  border-top: 6px solid rgb(118, 71, 52); */
+  border-style: outset;
+}
+
+.column-4 .button-key-binding {
+  /* border: 6px solid rgb(151, 144, 64);
+  border-top: 6px solid rgb(131, 125, 66); */
+  border-style: outset;
+}
+
+.button-key-binding >span {
+  margin-bottom: 5px;
 }
 
 .button {
