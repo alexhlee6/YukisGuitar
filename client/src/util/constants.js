@@ -45,9 +45,9 @@ export default {
     }
   },
   SONG_URLS: {
-    MARUTSUKE: "https://www.dl.dropboxusercontent.com/s/x0fu4c23xtonypi/MARUTSUKE.mp3?dl=0",
-    FUYU_NO_HANASHI: "https://www.dl.dropboxusercontent.com/s/292fitwiocfkcrf/FUYU_NO_HANASHI.mp3?dl=0",
-    KIZUATO: "https://www.dl.dropboxusercontent.com/s/7pl3zdmwo6jj6x4/KIZUATO.mp3?dl=0"
+    1: "https://www.dl.dropboxusercontent.com/s/x0fu4c23xtonypi/MARUTSUKE.mp3?dl=0",
+    2: "https://www.dl.dropboxusercontent.com/s/292fitwiocfkcrf/FUYU_NO_HANASHI.mp3?dl=0",
+    3: "https://www.dl.dropboxusercontent.com/s/7pl3zdmwo6jj6x4/KIZUATO.mp3?dl=0"
   }
 
 

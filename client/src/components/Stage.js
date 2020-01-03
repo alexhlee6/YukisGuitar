@@ -3,18 +3,22 @@ import Column from "./Column";
 import Note from "./Note";
 import $ from "jquery";
 import { postLog, getLog } from "../util/api_util";
+import CONSTANTS from "../util/constants";
+const { SONG_URLS } = CONSTANTS; 
 // import MIDISounds from 'midi-sounds-react';
 
 class Stage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      stageNum: props.stageNum,
       playing: false,
       started: false,
-      songUrl: "https://www.dl.dropboxusercontent.com/s/x0fu4c23xtonypi/MARUTSUKE.mp3?dl=0",
+      songUrl: SONG_URLS[props.stageNum],
       allCtx: {},
       allColumns: {},
       loading: true,
+      stageComplete: false, //
       score: {
         totalPoints: 0,
         perfect: 0,
@@ -23,9 +27,10 @@ class Stage extends React.Component {
       },
       misses: 0,
       timeLog: {1: [], 2: [], 3: [], 4: []}, //hold colNums and array of times recorded
-      createMode: false
+      createMode: false,
     }
     this.playSound = this.playSound.bind(this);
+    this.registerEvents = this.registerEvents.bind(this);
   }
 
   componentDidMount() {
@@ -51,6 +56,9 @@ class Stage extends React.Component {
     window.audioPlayer = document.getElementById("audio-player");
     window.audioPlayer.load();
     window.audioPlayer.volume = 0.4;
+    window.audioPlayer.addEventListener("ended", () => {
+      this.setState({ stageComplete: true });
+    })
   }
 
   trackTime(colNum) {
@@ -144,7 +152,6 @@ class Stage extends React.Component {
   createColumns() {
     let allCtx = {};
     let allColumns = {};
-    // { col1: Array(73), col2: Array(99), col3: Array(96), col4: Array(65), _id: "5e0e767cbeac7229ffc5086d", … }
     let colNums = [ 1, 2, 3, 4 ];
     colNums.forEach(colNum => {
       let id = "column-" + colNum.toString();
@@ -153,8 +160,7 @@ class Stage extends React.Component {
       allCtx[colNum] = ctx;
     });
 
-    getLog(1).then(log => {
-      // console.log(log);
+    getLog(this.state.stageNum).then(log => {
       colNums.forEach(colNum => {
         let colLogs = log[`col${colNum}`];
         let ctx = allCtx[colNum];
@@ -162,10 +168,11 @@ class Stage extends React.Component {
           colLogs = [];
         }
         allColumns[colNum] = new Column(
-          ctx, colNum, this.notifyMiss.bind(this), colLogs, this.notifyStarted.bind(this)
+          ctx, colNum, this.notifyMiss.bind(this), colLogs, 
+          this.notifyStarted.bind(this)
         );
       });
-      this.setState({ allCtx, allColumns });
+      this.setState({ allCtx, allColumns, logData: log });
     });
   }
 
@@ -201,7 +208,6 @@ class Stage extends React.Component {
     if (!noteY) return null;
     
     if (noteY >= 580 && noteY <= 620) {
-      console.log("perfect");
       pointsEarned += 3;
       column.removeNote(colNotes[0]);
       let perfectCount = this.state.score.perfect;
@@ -217,7 +223,6 @@ class Stage extends React.Component {
         $("#score-playing-inner").animate({opacity: 0}, 200);
       }, 200)
     } else if (noteY >= 560 && noteY <= 640) {
-      console.log("good");
       pointsEarned += 2;
       column.removeNote(colNotes[0]);
       let goodCount = this.state.score.good;
@@ -233,7 +238,6 @@ class Stage extends React.Component {
         $("#score-playing-inner").animate({ opacity: 0 }, 200);
       }, 200)
     } else if (noteY >= 500 && noteY <= 700 ) {
-      console.log("bad");
       pointsEarned += 1;
       column.removeNote(colNotes[0]);
       let badCount = this.state.score.bad;
@@ -263,6 +267,55 @@ class Stage extends React.Component {
     }, 200)
   }
 
+  findScore() {
+    $("#stage-completed-modal").animate({opacity: 1}, 1000);
+
+    if (!this.state.logData) return null;
+    let logData = this.state.logData;
+    let allLogs = [
+      ...logData["col1"], ...logData["col2"], 
+      ...logData["col3"], ...logData["col4"]
+    ];
+    let totalPossible = (allLogs.length) * 3;
+    let grade;
+    let numberGrade = parseInt((this.state.score.totalPoints / totalPossible) * 100); 
+    if (numberGrade >= 95) {
+      grade = <div className="stage-letter-grade" style={{color: "yellow"}}>S</div>;
+    } else if (numberGrade >= 90) {
+      grade = <div className="stage-letter-grade" style={{color: "springgreen"}}>A</div>;
+    } else if (numberGrade >= 80) {
+      grade = <div className="stage-letter-grade" style={{ color: "cyan" }}>B</div>;
+    } else if (numberGrade >= 70) {
+      grade = <div className="stage-letter-grade" style={{ color: "violet" }}>C</div>;
+    } else if (numberGrade >= 60) {
+      grade = <div className="stage-letter-grade" style={{ color: "blue" }}>D</div>;
+    } else {
+      grade = <div className="stage-letter-grade" style={{color: "darkred"}}>F</div>;
+    }
+    return (
+      <div className="stage-completed-container">
+        <h2>Stage Complete</h2>
+        <div className="stage-complete-info">
+          { grade }
+          <div className="stage-complete-counts">
+            <p><span>Perfect:</span> {this.state.score.perfect}</p>
+            <p><span>Good:</span> {this.state.score.good}</p>
+            <p><span>Bad:</span> {this.state.score.bad}</p>
+            <p><span>Misses:</span> {this.state.misses}</p>
+          </div>
+        </div>
+        {/* Do something with resetting and going back to home: */}
+        <div onClick={() => this.setState({
+          playing: false, started: false,
+          songUrl: "https://www.dl.dropboxusercontent.com/s/x0fu4c23xtonypi/MARUTSUKE.mp3?dl=0",
+          allCtx: {}, allColumns: {}, loading: true, stageComplete: false,
+          score: { totalPoints: 0, perfect: 0, good: 0, bad: 0 },
+          misses: 0, timeLog: { 1: [], 2: [], 3: [], 4: [] }, createMode: false,
+        })}>EXIT</div>
+      </div>
+    )
+  }
+
   render() {
     if (this.state.loading) {
       return (
@@ -274,12 +327,17 @@ class Stage extends React.Component {
     }
     return (
       <div className="stage-main">
+        {
+          this.state.stageComplete ? (
+            <div id="stage-completed-modal" className="stage-completed-modal">
+              { this.findScore() }
+            </div>
+          ) : null
+        }
         <div id="curtain" className="stage-curtain">
           { !this.state.started && !window.audioPlayer.paused ? (
             <div className='loader'>Loading...</div>
-          ) : (
-            null
-          )}
+          ) : ( null )}
         </div>
         <div id="show-score-playing"><p id="score-playing-inner" style={{fontSize: 40}}></p></div>
         <audio id="audio-player" src={this.state.songUrl}></audio>
