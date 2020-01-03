@@ -2,6 +2,8 @@ import React from "react";
 import Column from "./Column";
 import Note from "./Note";
 import $ from "jquery";
+import { postLog, getLog } from "../util/api_util";
+import MIDISounds from 'midi-sounds-react';
 
 class Stage extends React.Component {
   constructor(props) {
@@ -19,8 +21,10 @@ class Stage extends React.Component {
         bad: 0,
       },
       misses: 0,
-      timeLog: {1: [], 2: [], 3: [], 4: []} //hold colNums and array of times recorded
+      timeLog: {1: [], 2: [], 3: [], 4: []}, //hold colNums and array of times recorded
+      createMode: false
     }
+    this.playSound = this.playSound.bind(this);
   }
 
   componentDidMount() {
@@ -53,6 +57,10 @@ class Stage extends React.Component {
     this.setState({ timeLog: newLog });
   }
 
+  playSound() {
+    window.midiSounds.playDrumsNow([36]);
+  }
+
   handleKey(key, type) {
     if (type === "keyup") {
       if (key === 72) {
@@ -80,6 +88,7 @@ class Stage extends React.Component {
         $("#key-1").addClass("pressed");
         this.checkScore(1);
         this.trackTime(1);
+        this.playSound();
         break;
       case 74:
         // console.log("J"); // col 2
@@ -87,6 +96,7 @@ class Stage extends React.Component {
         $("#key-2").addClass("pressed");
         this.checkScore(2);
         this.trackTime(2);
+        this.playSound();
         break;
       case 75:
         // console.log("K"); // col 3
@@ -94,6 +104,7 @@ class Stage extends React.Component {
         $("#key-3").addClass("pressed");
         this.checkScore(3);
         this.trackTime(3);
+        this.playSound();
         break;
       case 76: 
         // console.log("L"); // col 4
@@ -101,6 +112,7 @@ class Stage extends React.Component {
         $("#key-4").addClass("pressed");
         this.checkScore(4);
         this.trackTime(4);
+        this.playSound();
         break;
       case 32: //SPACEBAR
         if (type === "keydown") {
@@ -111,23 +123,48 @@ class Stage extends React.Component {
           }
         }
         break;
+      case 13: 
+        if (type === "keyup" && this.state.createMode) {
+          let currentLog = Object.assign({}, this.state.timeLog);
+          let newLog = {};
+          Object.keys(currentLog).forEach(key => {
+            let newKey = `col${key}`;
+            newLog[newKey] = currentLog[key];
+          });
+          newLog["songName"] = "marutsuke";
+          newLog["songNumber"] = 1;
+          postLog(newLog).then(log => console.log(log));
+          break;
+        }
     }
   }
 
   createColumns() {
     let allCtx = {};
     let allColumns = {};
-
-    let colNums = [1, 2, 3, 4];
+    // { col1: Array(73), col2: Array(99), col3: Array(96), col4: Array(65), _id: "5e0e767cbeac7229ffc5086d", … }
+    let colNums = [ 1, 2, 3, 4 ];
     colNums.forEach(colNum => {
       let id = "column-" + colNum.toString();
       let canvas = document.getElementById(id);
       let ctx = canvas.getContext("2d");
       allCtx[colNum] = ctx;
-
-      allColumns[colNum] = new Column(ctx, colNum, this.notifyMiss.bind(this));
     });
-    this.setState({ allCtx, allColumns });
+
+    getLog(1).then(log => {
+      console.log(log);
+      colNums.forEach(colNum => {
+        let colLogs = log[`col${colNum}`];
+        let ctx = allCtx[colNum];
+        if (this.state.createMode) {
+          colLogs = [];
+        }
+        allColumns[colNum] = new Column(
+          ctx, colNum, this.notifyMiss.bind(this), colLogs
+        );
+      });
+      this.setState({ allCtx, allColumns });
+    });
   }
 
   playColumns() {
@@ -165,6 +202,13 @@ class Stage extends React.Component {
       newScoreState["perfect"] = perfectCount + 1;
       newScoreState["totalPoints"] = pointsEarned;
       this.setState({ score: newScoreState });
+      let showScore = document.getElementById("score-playing-inner");
+      showScore.innerHTML = "Perfect";
+      $("#score-playing-inner").css("color", "springgreen");
+      $("#score-playing-inner").animate({opacity: 1}, 200);
+      setTimeout(() => {
+        $("#score-playing-inner").animate({opacity: 0}, 200);
+      }, 200)
     } else if (noteY >= 560 && noteY <= 640) {
       console.log("good");
       pointsEarned += 2;
@@ -174,6 +218,13 @@ class Stage extends React.Component {
       newScoreState["good"] = goodCount + 1;
       newScoreState["totalPoints"] = pointsEarned;
       this.setState({ score: newScoreState });
+      let showScore = document.getElementById("score-playing-inner");
+      showScore.innerHTML = "Good";
+      $("#score-playing-inner").css("color", "yellow");
+      $("#score-playing-inner").animate({ opacity: 1 }, 200);
+      setTimeout(() => {
+        $("#score-playing-inner").animate({ opacity: 0 }, 200);
+      }, 200)
     } else if (noteY >= 500 && noteY <= 700 ) {
       console.log("bad");
       pointsEarned += 1;
@@ -183,18 +234,41 @@ class Stage extends React.Component {
       newScoreState["bad"] = badCount + 1;
       newScoreState["totalPoints"] = pointsEarned;
       this.setState({ score: newScoreState });
+      let showScore = document.getElementById("score-playing-inner");
+      showScore.innerHTML = "Bad";
+      $("#score-playing-inner").css("color", "blue");
+      $("#score-playing-inner").animate({ opacity: 1 }, 200);
+      setTimeout(() => {
+        $("#score-playing-inner").animate({ opacity: 0 }, 200);
+      }, 200)
     }
   }
 
   notifyMiss() {
     let missCount = this.state.misses;
     this.setState({ misses: missCount + 1 });
+    let showScore = document.getElementById("score-playing-inner");
+    showScore.innerHTML = "Miss";
+    $("#score-playing-inner").css("color", "darkred");
+    $("#score-playing-inner").animate({ opacity: 1 }, 200);
+    setTimeout(() => {
+      $("#score-playing-inner").animate({ opacity: 0 }, 200);
+    }, 200)
   }
 
   render() {
+    if (this.state.loading) {
+      return (
+        <div className="stage-main">
+          <div className="stage-curtain"></div>
+          <audio id="audio-player" src={this.state.songUrl}></audio>
+        </div>
+      )
+    }
     return (
       <div className="stage-main">
         <div className="stage-curtain"></div>
+        <div id="show-score-playing"><p id="score-playing-inner" style={{fontSize: 40}}></p></div>
         <audio id="audio-player" src={this.state.songUrl}></audio>
         {
           this.state.loading && Object.keys(this.state.allCtx).length > 0 ? (

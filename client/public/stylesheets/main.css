@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Staatliches&display=swap');
+
 h2 {
   color: white;
   text-align: center;
@@ -37,6 +39,7 @@ h2 {
   align-items: center;
   justify-content: flex-end;
   background: linear-gradient(black, transparent);
+  position: relative;
 }
 
 .stage-curtain {
@@ -47,6 +50,10 @@ h2 {
   position: relative;
   top: 0;
   position: absolute;
+}
+
+.MIDISounds {
+  display: none;
 }
 
 .all-columns {
@@ -159,4 +166,25 @@ h2 {
   height: 165px;
   max-height: 140px;
   object-fit: cover;
+}
+
+
+#show-score-playing {
+  /* opacity: 0;s */
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  color: white;
+  font-size: 50;
+  z-index: 5;
+  font-family: 'Staatliches';
+}
+
+#score-playing-inner {
+  margin-top: 200px;
+  color: rgb(138, 138, 138);
+  
 }

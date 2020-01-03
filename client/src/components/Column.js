@@ -1,13 +1,13 @@
 import Note from "./Note";
 import CONSTANTS from "../util/constants";
-import Log from "./Log.js";
+// import Log from "./Log.js";
 const COLUMN_OPTIONS = CONSTANTS.COLUMN_OPTIONS;
 
 // All notes in column are same color 
 // Only need start time and whether game is playing (ability to pause)
 export default class Column {
 
-  constructor(ctx, colNum, notifyMiss) {
+  constructor(ctx, colNum, notifyMiss, logs) {
     this.ctx = ctx;
     this.colNum = colNum;
     this.color = COLUMN_OPTIONS[colNum].COLOR;
@@ -20,7 +20,8 @@ export default class Column {
     this.started = false;
     this.playing = false;
     this.allNotes = [];
-    this.timeLogs = [...Log[colNum]];
+    this.timeLogs = logs;
+    // this.timeLogs = [...Log[colNum]];
     this.animate(ctx);
   }
 
