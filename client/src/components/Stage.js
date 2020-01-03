@@ -141,15 +141,15 @@ class Stage extends React.Component {
         this.trackTime(4);
         this.playSound();
         break;
-      case 32: //SPACEBAR
-        if (type === "keydown") {
-          if (window.audioPlayer.paused) {
-            this.playColumns();
-          } else if (window.audioPlayer.src && !window.audioPlayer.paused) {
-            this.pauseColumns();
-          }
-        }
-        break;
+      // case 32: //SPACEBAR
+      //   if (type === "keydown") {
+      //     if (window.audioPlayer.paused) {
+      //       this.playColumns();
+      //     } else if (window.audioPlayer.src && !window.audioPlayer.paused) {
+      //       this.pauseColumns();
+      //     }
+      //   }
+      //   break;
       case 13: 
         if (type === "keyup" && this.state.createMode) {
           let currentLog = Object.assign({}, this.state.timeLog);
@@ -178,7 +178,6 @@ class Stage extends React.Component {
     });
 
     getLog(this.state.stageNum).then(log => {
-      console.log(log);
       colNums.forEach(colNum => {
         let colLogs = log[`col${colNum}`];
         let ctx = allCtx[colNum];
