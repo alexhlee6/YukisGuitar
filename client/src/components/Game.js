@@ -26,6 +26,13 @@ class Game extends React.Component {
     this.setState({ started: true, playing: true, stageNum: stageNum });
   }
 
+  setStage(stageNum) {
+    // stuff
+    // let stage;
+    // probably make the stage here instead of getStage
+    // this.setState({ stageNum, stage })
+  }
+
   getStage() {
     return (
       <Stage stageNum={this.state.stageNum} />
@@ -43,9 +50,9 @@ class Game extends React.Component {
               <div className="stage-select">
                 <h2>SELECT STAGE</h2>
                 <ul className="stage-select-list">
-                  <li key="song-1"><i className="fas fa-play"></i>Marutsuke</li>
-                  <li key="song-2"><i className="fas fa-play"></i>Fuyu no Hanashi</li>
-                  <li key="song-3"><i className="fas fa-play"></i>Kizuato</li>
+                  <li key="song-1" onClick={() => this.setStage(1)}><i className="fas fa-play"></i>Marutsuke</li>
+                  <li key="song-2" onClick={() => this.setStage(2)}><i className="fas fa-play"></i>Fuyu no Hanashi</li>
+                  <li key="song-3" onClick={() => this.setStage(3)}><i className="fas fa-play"></i>Kizuato</li>
                 </ul>
               </div>
             </div>
