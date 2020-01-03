@@ -2,18 +2,31 @@
   "name": "jsproject",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "homepage": "./",
   "scripts": {
+    "start": "node app.js",
+    "server": "nodemon app.js",
+    "debug": "nodemon --inspect app.js",
     "client": "npm start --prefix client",
     "client-install": "npm install --prefix client",
-    "dev": "npm run client",
+    "dev": "concurrently \"npm run debug\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alex629lee/js-project.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@mongoosejs/double": "^0.2.0",
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.0.2",
+    "express": "^4.17.1",
+    "mongoose": "^5.8.3",
+    "mongoose-float": "^1.0.4",
     "nodemon": "^2.0.2"
   }
 }
