@@ -6,37 +6,40 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      started: false, playing: false, 
-      stageNum: null, currentStage: null
+      started: false, 
+      stageNum: null
     };
   }
 
-  componentDidMount() {
-    this.restart();
-  }
+  // componentDidMount() {
+  //   this.restart();
+  // }
 
   restart() {
     this.setState({
-      started: false, playing: false, 
-      stageNum: null, currentStage: null
+      started: false, 
+      stageNum: null, 
     });
   }
 
-  play(stageNum = "") {
-    this.setState({ started: true, playing: true, stageNum: stageNum });
-  }
 
   setStage(stageNum) {
-    // stuff
-    // let stage;
-    // probably make the stage here instead of getStage
-    // this.setState({ stageNum, stage })
+    this.setState({ stageNum, started: true });
   }
 
   getStage() {
-    return (
-      <Stage stageNum={this.state.stageNum} />
-    )
+    if (this.state.started) {
+      return (
+        <Stage
+          stageNum={this.state.stageNum}
+          notifyGameEnded={this.notifyGameEnded.bind(this)}
+        />
+      )
+    }
+  }
+
+  notifyGameEnded() {
+    this.restart();
   }
 
   render() {
@@ -62,14 +65,6 @@ class Game extends React.Component {
     }
     return (
       <div className="game-main">
-        { 
-          this.state.started ? (
-            this.getStage()
-          ) : (
-            null 
-          )
-        }
-
         {this.getStage()}
       </div>
     )

@@ -163,15 +163,19 @@
 #show-score-playing {
   /* opacity: 0;s */
   position: absolute;
-  height: 100%;
+  top: 0;
+  height: calc(100% - 140px);
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   color: white;
-  font-size: 50;
+  font-size: 37;
   z-index: 5;
-  font-family: 'Staatliches';
+  /* font-family: 'Staatliches'; */
+  text-transform: uppercase;
+  font-family: 'PT Sans', sans-serif;
+  font-weight: bold;
 }
 
 #score-playing-inner {
@@ -189,18 +193,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "Staatliches";
+  /* font-family: "Staatliches"; */
+  font-family: 'PT Sans', sans-serif;
   text-transform: uppercase;
 }
 
 .stage-completed-container {
   width: 250px;
-  height: 350px;
+  height: 320px;
   border: 1px solid rgb(0, 0, 0);
   background-color: rgb(19, 19, 19);
   border-radius: 10px;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
   color: white;
@@ -208,32 +213,82 @@
 }
 
 .stage-completed-container > h2 {
-  font-size: 35px;
+  font-size: 28px;
 }
 
 .stage-complete-info {
   display: flex;
   justify-content: center;
   align-items: center;
+  line-height: 30px;
 }
 
 .stage-letter-grade {
-  height: 100px;
+  height: 120px;
   width: 100px;
+  margin-top: 10px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  font-size: 150px;
+  font-size: 140px;
+  font-weight: bold;
 }
 
 .stage-complete-counts {
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .stage-complete-counts span {
   margin-right: 10px;
 }
 
+.stage-complete-exit-button {
+  cursor: pointer;
+  font-size: 25px;
+  color: lightgray;
+}
+
+.start-modal {
+  z-index: 20;
+  color: white;
+  cursor: pointer;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  font-size: 23px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'PT Sans', sans-serif;
+  background-color: rgba(0, 0, 0, 0.344);
+  /* left: 50%; */
+  /* top: 50%; */
+}
+
+.start-modal > div {
+  /* width: 250px; */
+  text-align: center;
+  line-height: 60px;
+  font-weight: 600;
+  color: lightgray;
+  
+}
+
+.controls-container {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  color: rgb(167, 167, 167);
+  font-size: 25px;
+  cursor: pointer;
+  margin: 20px;
+  width: 70px;
+  height: 65px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
 /* STAGE SELECT */
 
