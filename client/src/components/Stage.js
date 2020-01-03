@@ -3,13 +3,14 @@ import Column from "./Column";
 import Note from "./Note";
 import $ from "jquery";
 import { postLog, getLog } from "../util/api_util";
-import MIDISounds from 'midi-sounds-react';
+// import MIDISounds from 'midi-sounds-react';
 
 class Stage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       playing: false,
+      started: false,
       songUrl: "https://www.dl.dropboxusercontent.com/s/x0fu4c23xtonypi/MARUTSUKE.mp3?dl=0",
       allCtx: {},
       allColumns: {},
@@ -30,6 +31,7 @@ class Stage extends React.Component {
   componentDidMount() {
     this.registerEvents();
     this.setState({ playing: false, loading: false });
+    $("#curtain").innerHTML = "<div className='loader'>Loading...</div>";
   }
 
   componentDidUpdate() {
@@ -152,7 +154,7 @@ class Stage extends React.Component {
     });
 
     getLog(1).then(log => {
-      console.log(log);
+      // console.log(log);
       colNums.forEach(colNum => {
         let colLogs = log[`col${colNum}`];
         let ctx = allCtx[colNum];
@@ -160,7 +162,7 @@ class Stage extends React.Component {
           colLogs = [];
         }
         allColumns[colNum] = new Column(
-          ctx, colNum, this.notifyMiss.bind(this), colLogs
+          ctx, colNum, this.notifyMiss.bind(this), colLogs, this.notifyStarted.bind(this)
         );
       });
       this.setState({ allCtx, allColumns });
@@ -181,7 +183,12 @@ class Stage extends React.Component {
       col.pauseColumn();
     });
     this.setState({ playing: false });
-    console.log(this.state);
+  }
+
+  notifyStarted() {
+    if (!this.state.started) {
+      this.setState({started: true});
+    }
   }
 
   checkScore(colNum) {
@@ -260,18 +267,24 @@ class Stage extends React.Component {
     if (this.state.loading) {
       return (
         <div className="stage-main">
-          <div className="stage-curtain"></div>
+          <div id="curtain" className="stage-curtain"></div>
           <audio id="audio-player" src={this.state.songUrl}></audio>
         </div>
       )
     }
     return (
       <div className="stage-main">
-        <div className="stage-curtain"></div>
+        <div id="curtain" className="stage-curtain">
+          { !this.state.started && !window.audioPlayer.paused ? (
+            <div className='loader'>Loading...</div>
+          ) : (
+            null
+          )}
+        </div>
         <div id="show-score-playing"><p id="score-playing-inner" style={{fontSize: 40}}></p></div>
         <audio id="audio-player" src={this.state.songUrl}></audio>
         {
-          this.state.loading && Object.keys(this.state.allCtx).length > 0 ? (
+          this.state.loading ? (
             null
           ) : (
             <div className = "all-columns">

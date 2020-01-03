@@ -1,13 +1,12 @@
 import Note from "./Note";
 import CONSTANTS from "../util/constants";
-// import Log from "./Log.js";
 const COLUMN_OPTIONS = CONSTANTS.COLUMN_OPTIONS;
 
 // All notes in column are same color 
 // Only need start time and whether game is playing (ability to pause)
 export default class Column {
 
-  constructor(ctx, colNum, notifyMiss, logs) {
+  constructor(ctx, colNum, notifyMiss, logs, notifyStarted) {
     this.ctx = ctx;
     this.colNum = colNum;
     this.color = COLUMN_OPTIONS[colNum].COLOR;
@@ -21,6 +20,8 @@ export default class Column {
     this.playing = false;
     this.allNotes = [];
     this.timeLogs = logs;
+    this.startNotified = false;
+    this.notifyStarted = notifyStarted;
     // this.timeLogs = [...Log[colNum]];
     this.animate(ctx);
   }
@@ -68,6 +69,10 @@ export default class Column {
       if (window.audioPlayer.currentTime + 3.32 >= log) {
         let newNote = new Note(this.color, this);
         newNotes.push(newNote);
+        if (!this.startNotified) {
+          this.notifyStarted();
+          this.startNotified = true;
+        }
       } else {
         newLogs.push(log);
       }
