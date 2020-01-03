@@ -28,14 +28,22 @@ class Game extends React.Component {
   }
 
   getStage() {
-    if (this.state.started) {
-      return (
-        <Stage
-          stageNum={this.state.stageNum}
-          notifyGameEnded={this.notifyGameEnded.bind(this)}
-        />
-      )
+    if (!this.state.started) return null;
+    let songName;
+    if (this.state.stageNum === 1) {
+      songName = "marutsuke";
+    } else if (this.state.stageNum === 2) {
+      songName = "fuyu no hanashi";
+    } else if (this.state.stageNum === 3) {
+      songName = "kizuato";
     }
+    return (
+      <Stage
+        stageNum={this.state.stageNum}
+        songName={songName}
+        notifyGameEnded={this.notifyGameEnded.bind(this)}
+      />
+    )
   }
 
   notifyGameEnded() {

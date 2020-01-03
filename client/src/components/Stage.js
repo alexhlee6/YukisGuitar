@@ -11,6 +11,7 @@ class Stage extends React.Component {
     super(props);
     this.notifyGameEnded = props.notifyGameEnded;
     this.state = {
+      songName: props.songName,
       stageNum: props.stageNum,
       playing: false,
       starting: true,
@@ -29,7 +30,7 @@ class Stage extends React.Component {
       muted: false,
       misses: 0,
       timeLog: {1: [], 2: [], 3: [], 4: []}, //hold colNums and array of times recorded
-      createMode: true,
+      createMode: false,
     }
     this.playSound = this.playSound.bind(this);
     this.registerEvents = this.registerEvents.bind(this);
@@ -157,8 +158,8 @@ class Stage extends React.Component {
             let newKey = `col${key}`;
             newLog[newKey] = currentLog[key];
           });
-          newLog["songName"] = "fuyu no hanashi";
-          newLog["songNumber"] = 2;
+          newLog["songName"] = this.state.songName;
+          newLog["songNumber"] = this.state.stageNum;
           postLog(newLog).then(log => console.log(log));
           break;
         }
@@ -177,15 +178,10 @@ class Stage extends React.Component {
     });
 
     getLog(this.state.stageNum).then(log => {
+      console.log(log);
       colNums.forEach(colNum => {
-        // let colLogs = log[`col${colNum}`];
+        let colLogs = log[`col${colNum}`];
         let ctx = allCtx[colNum];
-        let colLogs = [];
-        // if (!this.state.createMode) {
-        //   let colLogs = [];
-        // } else {
-          colLogs = log[`col${colNum}`];
-        // }
         allColumns[colNum] = new Column(
           ctx, colNum, this.notifyMiss.bind(this), colLogs, 
           this.notifyStarted.bind(this)
