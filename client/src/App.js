@@ -33,9 +33,9 @@ function onElementHeightChange(elm, callback) {
 
 
 onElementHeightChange(document.body, function (h) {
-  console.log('Body height changed:', h);
+  // console.log('Body height changed:', h);
   let cols = Array.from(document.getElementsByClassName("column-container"));
-  console.log(cols);
+  // console.log(cols);
   document.body.height = h + "px";
   if (cols.length > 0) {
     cols.forEach(col => {

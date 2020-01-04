@@ -61,18 +61,10 @@ class Game extends React.Component {
       $('.stage-select-main').height(document.body.clientHeight + 'px');
       $(".stage-select-page-container").height(document.body.clientHeight + 'px');
     }
-
     // const width = window.innerWidth || document.documentElement.clientWidth ||
     //   document.body.clientWidth;
     // const height = window.innerHeight || document.documentElement.clientHeight ||
     //   document.body.clientHeight;
-
-    
-    // $("html").height(bodyh + "px");
-    // $("body").height(bodyh + "px");
-    // $(".column-container").height(document.body.clientHeight + 'px');
-    // $('.stage-select-main').height(document.body.clientHeight + 'px');
-    // $(".stage-select-page-container").height(document.body.clientHeight + 'px');
   }
 
 
