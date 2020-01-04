@@ -44,17 +44,22 @@ onElementHeightChange(document.body, function (h) {
       col.height = h + "px";
     })
   }
+  document.getElementById("root").style.height = window.innerHeight + "px";
   let stageSelectMain = Array.from(document.getElementsByClassName("stage-select-main"));
   if (stageSelectMain.length > 0) {
-    stageSelectMain[0].height = h + "px";
+    stageSelectMain[0].style.height = h + "px";
   }
   let selectPageContainer = Array.from(document.getElementsByClassName("stage-select-page-container"));
   if (selectPageContainer.length > 0) {
-    selectPageContainer[0].height = h + "px";
+    selectPageContainer[0].style.height = h + "px";
   }
   let showScoreModal = document.getElementById("show-score-playing");
   if (showScoreModal) {
-    showScoreModal.height = (h - 140) + "px";
+    showScoreModal.style.height = (h - 140) + "px";
+  }
+  let gameMain = Array.from(document.getElementsByClassName("game-main"));
+  if (gameMain.length > 0) {
+    gameMain[0].style.height = h + "px";
   }
 });
 

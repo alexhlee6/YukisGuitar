@@ -173,7 +173,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   color: white;
   font-size: 37;
   z-index: 5;
@@ -184,7 +184,7 @@
 }
 
 #score-playing-inner {
-  margin-top: 200px;
+  /* margin-top: 200px; */
   color: rgb(138, 138, 138);
 }
 
