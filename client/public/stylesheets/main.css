@@ -54,7 +54,7 @@
 
 .stage-curtain {
   width: 100%;
-  height: calc(100% - 180px);
+  height: 50%;
   background: linear-gradient(black, transparent);
   z-index: 3;
   top: 0;
