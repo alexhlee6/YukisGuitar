@@ -50,6 +50,10 @@ onElementHeightChange(document.body, function (h) {
   if (selectPageContainer.length > 0) {
     selectPageContainer[0].height = h + "px";
   }
+  let showScoreModal = document.getElementById("show-score-playing");
+  if (showScoreModal) {
+    showScoreModal.height = (h - 140) + "px";
+  }
 });
 
 
