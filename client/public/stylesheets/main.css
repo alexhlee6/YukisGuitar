@@ -169,11 +169,11 @@
   /* opacity: 0;s */
   position: absolute;
   top: 0;
-  height: calc(100% - 140px);
+  height: 50%;
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: flex-end;
   color: white;
   font-size: 37;
   z-index: 5;
