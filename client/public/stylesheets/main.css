@@ -401,6 +401,10 @@
   .stage-select-page-title {
     margin-top: 0;
   }
+
+  .button-key-binding > span {
+    display: hidden;
+  }
 }
 
 

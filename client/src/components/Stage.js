@@ -426,10 +426,12 @@ class Stage extends React.Component {
               <div className="column-container column-1">
                 <canvas id="column-1" width="93.75" height="600" />
                 <div className="button-container" id="button-container-1"
-                    onClick={() => {
-                      this.handleKey(72, "keydown");
-                      setTimeout(() => this.handleKey(72, "keyup"), 200);
-                    }}>
+                  onTouchStart={() => {
+                    this.handleKey(72, "keydown");
+                  }}
+                  onTouchEnd={() => {
+                    this.handleKey(72, "keyup")
+                }}>
                   <div 
                     className="button-key-binding" id="key-1">
                     <span id="key-span-1">H</span>
@@ -440,10 +442,9 @@ class Stage extends React.Component {
               <div className="column-container column-2">
                 <canvas id="column-2" width="93.75" height="600" />
                 <div className="button-container" id="button-container-2"
-                  onClick={() => {
-                    this.handleKey(74, "keydown");
-                    setTimeout(() => this.handleKey(74, "keyup"), 200);
-                }}>
+                  onTouchStart={() => this.handleKey(74, "keydown")}
+                  onTouchEnd={() => this.handleKey(74, "keyup")}
+                >
                   <div className="button-key-binding" id="key-2"><span id="key-span-2">J</span></div>
                   <img className="button" src={process.env.PUBLIC_URL + '/images/ueno.jpg'} />
                 </div>
@@ -451,10 +452,9 @@ class Stage extends React.Component {
               <div className="column-container column-3">
                 <canvas id="column-3" width="93.75" height="600" />
                 <div className="button-container" id="button-container-3"
-                  onClick={() => {
-                    this.handleKey(75, "keydown");
-                    setTimeout(() => this.handleKey(75, "keyup"), 200);
-                }}>
+                  onTouchStart={() => this.handleKey(75, "keydown")}
+                  onTouchEnd={() => this.handleKey(75, "keyup")}
+                >
                   <div className="button-key-binding" id="key-3"><span id="key-span-3">K</span></div>
                   <img className="button" src={process.env.PUBLIC_URL + '/images/mafu.jpg'} />
                 </div>
@@ -462,11 +462,10 @@ class Stage extends React.Component {
               <div className="column-container column-4">
                 <canvas id="column-4" width="93.75" height="600" />
                 <div className="button-container" id="button-container-4"
-                  onClick={() => {
-                    this.handleKey(76, "keydown");
-                    setTimeout(() => this.handleKey(76, "keyup"), 200);
-                }}>
-                    <div className="button-key-binding" id="key-4"><span id="key-span-4">L</span></div>
+                  onTouchStart={() => this.handleKey(76, "keydown")}
+                  onTouchEnd={() => this.handleKey(76, "keyup")}
+                >
+                  <div className="button-key-binding" id="key-4"><span id="key-span-4">L</span></div>
                   <img className="button" src={process.env.PUBLIC_URL + '/images/aki.jpg'} />
                 </div>
               </div>
