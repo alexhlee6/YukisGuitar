@@ -1,5 +1,6 @@
 import React from "react";
 import Stage from "./Stage";
+import $ from "jquery";
 
 class Game extends React.Component {
 
@@ -7,19 +8,32 @@ class Game extends React.Component {
     super(props);
     this.state = {
       started: false, 
-      stageNum: null
+      stageNum: null,
+      loading: true
     };
   }
 
-  // componentDidMount() {
-  //   this.restart();
-  // }
+  componentDidMount() {
+    this.restart();
+    this.setState({loading: false});
+  }
 
   restart() {
     this.setState({
       started: false, 
       stageNum: null, 
     });
+  }
+
+  componentDidUpdate() {
+    if (window.audioPlayer) {
+      // let viewportHeight = 
+      $(".column-container").height(window.innerHeight + 'px');
+    }
+    if (!this.state.started && !this.state.loading) {
+      $('.stage-select-main').height(window.innerHeight + 'px');
+      $(".stage-select-page-container").height(window.innerHeight + 'px');
+    }
   }
 
 

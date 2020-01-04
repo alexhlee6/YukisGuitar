@@ -47,6 +47,7 @@ class Stage extends React.Component {
     this.registerEvents();
     this.setState({ playing: false, loading: false });
     $("#curtain").innerHTML = "<div className='loader'>Loading...</div>";
+    $(".column-container").height(window.innerHeight + 'px');
   }
 
   componentDidUpdate() {
