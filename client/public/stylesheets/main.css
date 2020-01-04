@@ -407,6 +407,10 @@
   .button-key-binding > span {
     display: hidden;
   }
+
+  #key-span-1, #key-span-2, #key-span-3, #key-span-4 {
+    display: none;
+  }
 }
 
 

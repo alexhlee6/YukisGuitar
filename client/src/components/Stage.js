@@ -233,7 +233,7 @@ class Stage extends React.Component {
       let showScore = document.getElementById("score-playing-inner");
       showScore.innerHTML = "Perfect";
       $("#score-playing-inner").css("color", "springgreen");
-      $("#score-playing-inner").animate({opacity: 0.8}, 200);
+      $("#score-playing-inner").animate({opacity: 0.5}, 200);
       setTimeout(() => {
         $("#score-playing-inner").animate({opacity: 0}, 200);
       }, 200)
@@ -248,7 +248,7 @@ class Stage extends React.Component {
       let showScore = document.getElementById("score-playing-inner");
       showScore.innerHTML = "Good";
       $("#score-playing-inner").css("color", "yellow");
-      $("#score-playing-inner").animate({ opacity: 0.8 }, 200);
+      $("#score-playing-inner").animate({ opacity: 0.5 }, 200);
       setTimeout(() => {
         $("#score-playing-inner").animate({ opacity: 0 }, 200);
       }, 200)
@@ -263,7 +263,7 @@ class Stage extends React.Component {
       let showScore = document.getElementById("score-playing-inner");
       showScore.innerHTML = "Bad";
       $("#score-playing-inner").css("color", "blue");
-      $("#score-playing-inner").animate({ opacity: 0.8 }, 200);
+      $("#score-playing-inner").animate({ opacity: 0.5 }, 200);
       setTimeout(() => {
         $("#score-playing-inner").animate({ opacity: 0 }, 200);
       }, 200)
@@ -276,7 +276,7 @@ class Stage extends React.Component {
     let showScore = document.getElementById("score-playing-inner");
     showScore.innerHTML = "Miss";
     $("#score-playing-inner").css("color", "darkred");
-    $("#score-playing-inner").animate({ opacity: 0.8 }, 200);
+    $("#score-playing-inner").animate({ opacity: 0.5 }, 200);
     setTimeout(() => {
       $("#score-playing-inner").animate({ opacity: 0 }, 200);
     }, 200)
