@@ -84,6 +84,23 @@ class Stage extends React.Component {
     })
   }
 
+  setKeys(num) {
+    if (num === 1) { //ASDF
+      this.setState({
+        starting: false,
+        keyCodes: [65, 83, 68, 70],
+        keys: { 1: [65, "A"], 2: [83, "S"], 3: [68, "D"], 4: [70, "F"] }
+      });
+    } else { //HJKL
+      this.setState({
+        starting: false,
+        keyCodes: [72, 74, 75, 76],
+        keys: { 1: [72, "H"], 2: [74, "J"], 3: [75, "K"], 4: [76, "L"] }
+      });
+    }
+    this.playColumns();
+  }
+
   trackTime(colNum) {
     let newLog = Object.assign({}, this.state.timeLog);
     newLog[colNum].push(window.audioPlayer.currentTime);
@@ -95,71 +112,62 @@ class Stage extends React.Component {
   }
 
   handleKey(key, type) {
+    if (this.state.keys && !this.state.keyCodes.includes(key)) return null;
     if (type === "keyup") {
-      if (key === 72) {
+      if (key === 72 || key === 65) {
         $("#button-container-1").removeClass("pressed");
         $("#key-1").removeClass("pressed");
         return;
-      } else if (key === 74) {
+      } else if (key === 74 || key === 83) {
         $("#button-container-2").removeClass("pressed");
         $("#key-2").removeClass("pressed");
         return;
-      } else if (key === 75) {
+      } else if (key === 75 || key === 68) {
         $("#button-container-3").removeClass("pressed");
         $("#key-3").removeClass("pressed");
         return;
-      } else if (key === 76) {
+      } else if (key === 76 || key === 70) {
         $("#button-container-4").removeClass("pressed");
         $("#key-4").removeClass("pressed");
         return;
       }
     }
-    switch (key) {
-      case 72: 
-        // console.log("H"); // col 1
-        $("#button-container-1").addClass("pressed");
-        $("#key-1").addClass("pressed");
-        this.checkScore(1);
-        this.trackTime(1);
-        this.playSound();
-        break;
-      case 74:
-        // console.log("J"); // col 2
-        $("#button-container-2").addClass("pressed");
-        $("#key-2").addClass("pressed");
-        this.checkScore(2);
-        this.trackTime(2);
-        this.playSound();
-        break;
-      case 75:
-        // console.log("K"); // col 3
-        $("#button-container-3").addClass("pressed");
-        $("#key-3").addClass("pressed");
-        this.checkScore(3);
-        this.trackTime(3);
-        this.playSound();
-        break;
-      case 76: 
-        // console.log("L"); // col 4
-        $("#button-container-4").addClass("pressed");
-        $("#key-4").addClass("pressed");
-        this.checkScore(4);
-        this.trackTime(4);
-        this.playSound();
-        break;
-      case 13: 
-        if (type === "keyup" && this.state.createMode) {
-          let currentLog = Object.assign({}, this.state.timeLog);
-          let newLog = {};
-          Object.keys(currentLog).forEach(key => {
-            let newKey = `col${key}`;
-            newLog[newKey] = currentLog[key];
-          });
-          newLog["songName"] = this.state.songName;
-          newLog["songNumber"] = this.state.stageNum;
-          postLog(newLog).then(log => console.log(log));
-          break;
-        }
+    if (key === 72 || key === 65) {
+      $("#button-container-1").addClass("pressed");
+      $("#key-1").addClass("pressed");
+      this.checkScore(1);
+      this.trackTime(1);
+      this.playSound();
+      return;
+    } else if (key === 74 || key === 83) {
+      $("#button-container-2").addClass("pressed");
+      $("#key-2").addClass("pressed");
+      this.checkScore(2);
+      this.trackTime(2);
+      this.playSound();
+    } else if(key === 75 || key === 68) {
+      $("#button-container-3").addClass("pressed");
+      $("#key-3").addClass("pressed");
+      this.checkScore(3);
+      this.trackTime(3);
+      this.playSound();
+    } else if (key === 76 || key === 70) {
+      $("#button-container-4").addClass("pressed");
+      $("#key-4").addClass("pressed");
+      this.checkScore(4);
+      this.trackTime(4);
+      this.playSound();
+    }
+    if (key === 13 && type === "keyup" && this.state.createMode) {
+      let currentLog = Object.assign({}, this.state.timeLog);
+      let newLog = {};
+      Object.keys(currentLog).forEach(key => {
+        let newKey = `col${key}`;
+        newLog[newKey] = currentLog[key];
+      });
+      newLog["songName"] = this.state.songName;
+      newLog["songNumber"] = this.state.stageNum;
+      postLog(newLog).then(log => console.log(log));
     }
   }
 
@@ -265,6 +273,13 @@ class Stage extends React.Component {
       }, 200)
     }
   }
+
+  // handleShowScore(word, color) {
+  //   let showScore = document.getElementById("score-playing-inner");
+  //   showScore.innerHTML = word;
+  //   $("#score-playing-inner").css("color", color);
+  //   $("#score-playing-inner").animate({ opacity: 0.5 }, 200);
+  // }
 
   notifyMiss() {
     let missCount = this.state.misses;
@@ -418,13 +433,33 @@ class Stage extends React.Component {
         { grade }
 
         {this.state.starting ? (
-          <div className="start-modal" onClick={() => {
-            this.playColumns();
-            this.setState({ starting: false });
-          }}><div>CLICK ANYWHERE TO START</div></div>
+            <div className="start-modal click-anywhere" onClick={() => {
+              this.playColumns();
+              this.setState({ starting: false });
+            }}>
+              <div className="start-modal-click-anywhere">CLICK ANYWHERE TO START</div>
+            </div>
         ) : (
             null
         )}
+        {this.state.starting ? (
+          <div className="start-modal key-bindings">
+            <div className="select-key-bindings-container">
+              <span>SELECT KEY BINDINGS</span>
+              <div className="key-bindings-container">
+                <div className="key-bindings-1" onClick={() => this.setKeys(1)}>
+                  <span>A</span><span>S</span><span>D</span><span>F</span>
+                </div>
+                <div className="key-bindings-2" onClick={() => this.setKeys(2)}>
+                  <span>H</span><span>J</span><span>K</span><span>L</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+            null
+        )}
+
 
         { this.getControls() }
 
@@ -459,7 +494,7 @@ class Stage extends React.Component {
                 }}>
                   <div 
                     className="button-key-binding" id="key-1">
-                    <span id="key-span-1">H</span>
+                      {this.state.keys ? <span id="key-span-1">{this.state.keys[1][1]}</span> : null}
                   </div>
                   <img className="button" src={ process.env.PUBLIC_URL + '/images/haru.jpg' } />
                 </div>
@@ -470,7 +505,9 @@ class Stage extends React.Component {
                   onTouchStart={() => this.handleKey(74, "keydown")}
                   onTouchEnd={() => this.handleKey(74, "keyup")}
                 >
-                  <div className="button-key-binding" id="key-2"><span id="key-span-2">J</span></div>
+                    <div className="button-key-binding" id="key-2">
+                      {this.state.keys ? <span id="key-span-2">{this.state.keys[2][1]}</span> : null}
+                    </div>
                   <img className="button" src={process.env.PUBLIC_URL + '/images/ueno.jpg'} />
                 </div>
               </div>
@@ -480,7 +517,9 @@ class Stage extends React.Component {
                   onTouchStart={() => this.handleKey(75, "keydown")}
                   onTouchEnd={() => this.handleKey(75, "keyup")}
                 >
-                  <div className="button-key-binding" id="key-3"><span id="key-span-3">K</span></div>
+                  <div className="button-key-binding" id="key-3">
+                      {this.state.keys ? <span id="key-span-3">{this.state.keys[3][1]}</span> : null}
+                  </div>
                   <img className="button" src={process.env.PUBLIC_URL + '/images/mafu.jpg'} />
                 </div>
               </div>
@@ -490,7 +529,9 @@ class Stage extends React.Component {
                   onTouchStart={() => this.handleKey(76, "keydown")}
                   onTouchEnd={() => this.handleKey(76, "keyup")}
                 >
-                  <div className="button-key-binding" id="key-4"><span id="key-span-4">L</span></div>
+                  <div className="button-key-binding" id="key-4">
+                      {this.state.keys ? <span id="key-span-4">{this.state.keys[4][1]}</span> : null}
+                  </div>
                   <img className="button" src={process.env.PUBLIC_URL + '/images/aki.jpg'} />
                 </div>
               </div>

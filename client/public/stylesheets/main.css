@@ -7,6 +7,8 @@
 @import url('https://fonts.googleapis.com/css?family=PT+Sans:400,700&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Cute+Font&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:700&display=swap');
 /* h2 {
   color: white;
   text-align: center;
@@ -166,7 +168,7 @@
 }
 
 .button-key-binding >span {
-  border: 2px solid rgba(29, 29, 29, 0.201);
+  border: 1px solid rgba(29, 29, 29, 0.201);
   border-radius: 10px;
   background-color: rgba(31, 31, 31, 0.65);
   height: 50px;
@@ -175,6 +177,7 @@
   align-items: center;
   justify-content: center;
   color: rgb(193, 193, 193);
+  margin-bottom: 3px;
 }
 
 .button {
@@ -198,7 +201,8 @@
   font-size: 37;
   z-index: 5;
   text-transform: uppercase;
-  font-family: 'PT Sans', sans-serif;
+  /* font-family: 'PT Sans', sans-serif; */
+  font-family: "Roboto Condensed";
   font-weight: bold;
 }
 
@@ -216,8 +220,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* font-family: "Staatliches"; */
-  font-family: 'PT Sans', sans-serif;
+  /* font-family: 'PT Sans', sans-serif; */
+  font-family: "Roboto Condensed";
   text-transform: uppercase;
 }
 
@@ -233,7 +237,6 @@
   flex-direction: column;
   color: white;
   padding: 20px;
-  /* font-family: "Cute font"; */
   animation: boxglow 2s ease-in-out infinite alternate;
 }
 
@@ -295,7 +298,7 @@
 .start-modal {
   z-index: 20;
   color: white;
-  cursor: pointer;
+  cursor: default;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -383,12 +386,7 @@
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.434);
   color: white;
-  /* font-family: 'Signika Negative', sans-serif; */
-  /* font-family: 'Palanquin', sans-serif; */
-  /* font-family: 'Istok Web', sans-serif; */
-  /* font-family: 'Sintony', sans-serif; */
   font-family: 'PT Sans', sans-serif;
-  /* font-family: 'Open Sans', sans-serif; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -439,7 +437,6 @@
   margin-bottom: 5px;
   font-weight: 600;
   padding-bottom: 3px;
-  /* font-weight: 400; */
   color: lightgray;
   border-bottom: 2px solid rgba(211, 211, 211, 0.548);
 }
@@ -451,7 +448,6 @@
   color: lightgray;
   display: flex;
   align-items: center;
-  /* font-weight: bold; */
 }
 
 .stage-select i {
@@ -467,6 +463,66 @@
 .stage-select li:hover i {
   color: white;
 }
+
+.click-anywhere {
+  display: none;
+}
+
+.key-bindings {
+  backdrop-filter: brightness(45%);
+}
+
+.select-key-bindings-container {
+  height: 350px;
+  width: 450px;
+  font-size: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  border-radius: 10px;
+  /* font-family: 'Cute font', sans-serif; */
+  font-family: "Roboto Condensed";
+  font-weight: 500;
+}
+
+.select-key-bindings-container > span {
+  padding-bottom: 5px;
+  border-bottom: 2px solid rgb(109, 109, 109);
+}
+
+
+.key-bindings-container {
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.key-bindings-container > div {
+  font-size: 32px;
+  cursor: pointer;
+  font-family: "Cute font";
+  background-color: rgb(46, 46, 46);
+  padding: 30px 15px;
+  border-radius: 10px;
+  border: 1px solid rgb(70, 70, 70);
+}
+
+.key-bindings-container > div:hover {
+  border: 1px solid rgb(227, 227, 227);
+}
+
+.key-bindings-1 > span, .key-bindings-2 > span {
+  padding: 15px 20px;
+  border-radius: 10px;
+  font-size: 32px;
+  margin: 10px;
+  background-color: rgb(18, 18, 18);
+}
+
+
+
 
 @media only screen and (max-width: 430px) {
   .stage-select-container {
@@ -489,6 +545,16 @@
 
   #key-span-1, #key-span-2, #key-span-3, #key-span-4 {
     display: none;
+  }
+
+  .key-bindings {
+    display: none;
+  }
+
+  .click-anywhere {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 
