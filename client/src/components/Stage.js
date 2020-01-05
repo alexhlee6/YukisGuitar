@@ -1,6 +1,5 @@
 import React from "react";
 import Column from "./Column";
-import Note from "./Note";
 import $ from "jquery";
 import { postLog, getLog } from "../util/api_util";
 import CONSTANTS from "../util/constants";
@@ -35,6 +34,7 @@ class Stage extends React.Component {
     this.playSound = this.playSound.bind(this);
     this.registerEvents = this.registerEvents.bind(this);
     this.handleKey = this.handleKey.bind(this);
+    this.detachEvents = this.detachEvents.bind(this);
   }
 
   componentDidMount() {
@@ -58,6 +58,10 @@ class Stage extends React.Component {
   }
 
   componentWillUnmount() {
+    this.detachEvents();
+  }
+
+  detachEvents() {
     document.removeEventListener("keydown", this.keydownEvent);
     document.removeEventListener("keyup", this.keyupEvent);
     let oldElement = document.getElementById("audio-player");
@@ -66,6 +70,7 @@ class Stage extends React.Component {
   }
 
   registerEvents() {
+    window.midiSounds.setMasterVolume(0.8);
     document.addEventListener("keydown", this.keydownEvent);
     document.addEventListener("keyup", this.keyupEvent);
     window.audioPlayer = document.getElementById("audio-player");
@@ -142,15 +147,6 @@ class Stage extends React.Component {
         this.trackTime(4);
         this.playSound();
         break;
-      // case 32: //SPACEBAR
-      //   if (type === "keydown") {
-      //     if (window.audioPlayer.paused) {
-      //       this.playColumns();
-      //     } else if (window.audioPlayer.src && !window.audioPlayer.paused) {
-      //       this.pauseColumns();
-      //     }
-      //   }
-      //   break;
       case 13: 
         if (type === "keyup" && this.state.createMode) {
           let currentLog = Object.assign({}, this.state.timeLog);
@@ -272,7 +268,13 @@ class Stage extends React.Component {
 
   notifyMiss() {
     let missCount = this.state.misses;
-    this.setState({ misses: missCount + 1 });
+    let newScore = Object.assign({}, this.state.score);
+    let newTotal = this.state.score.totalPoints - 3;
+    if (newTotal < 0) {
+      newTotal = 0;
+    }
+    newScore["totalPoints"] = newTotal;
+    this.setState({ misses: missCount + 1, score: newScore });
     let showScore = document.getElementById("score-playing-inner");
     showScore.innerHTML = "Miss";
     $("#score-playing-inner").css("color", "darkred");
@@ -292,7 +294,6 @@ class Stage extends React.Component {
     let totalPossible = (allLogs.length) * 3;
     let grade;
     let numberGrade = parseInt((this.state.score.totalPoints / totalPossible) * 100); 
-    numberGrade -= (this.state.misses * 3);
     if (numberGrade >= 95) {
       grade = <div className="stage-letter-grade" style={{color: "yellow"}}>S</div>;
     } else if (numberGrade >= 90) {
@@ -318,7 +319,6 @@ class Stage extends React.Component {
             <p><span>Misses:</span> {this.state.misses}</p>
           </div>
         </div>
-        {/* Do something with resetting and going back to home: */}
         <div 
           className="stage-complete-exit-button"
           onClick={() => {
@@ -330,7 +330,7 @@ class Stage extends React.Component {
               score: { totalPoints: 0, perfect: 0, good: 0, bad: 0 },
               misses: 0, timeLog: { 1: [], 2: [], 3: [], 4: [] }, createMode: false,
             });
-          }}>EXIT</div>
+          }}><i className="fas fa-angle-left"></i>Back to Home</div>
       </div>
     );
   }
@@ -360,6 +360,14 @@ class Stage extends React.Component {
     if (window.audioPlayer.paused && window.audioPlayer.duration && !this.state.playing) {
       return (
         <div className="controls-container">
+          <i className="fas fa-angle-double-left"
+            onClick={ () => { 
+              this.pauseColumns();
+              window.audioPlayer = null;
+              this.detachEvents();
+              this.notifyGameEnded();
+            }}
+          ></i>
           <i className="fas fa-play" 
             onClick={() => {
               this.playColumns()
@@ -370,6 +378,14 @@ class Stage extends React.Component {
     } else if (!window.audioPlayer.paused && this.state.playing) {
       return (
         <div className="controls-container">
+          <i className="fas fa-angle-double-left"
+            onClick={() => {
+              this.pauseColumns();
+              window.audioPlayer = null;
+              this.detachEvents();
+              this.notifyGameEnded();
+            }}
+          ></i>
           <i className="fas fa-pause"
             onClick={() => {
               this.pauseColumns()
@@ -411,6 +427,14 @@ class Stage extends React.Component {
         )}
 
         { this.getControls() }
+
+        {(this.state.started && !this.state.starting ) ? (
+          <div className="score-count-module">
+            <p>{ this.state.score.totalPoints }</p>
+          </div>
+        ) : (
+          null
+        )}
 
         <div id="curtain" className="stage-curtain">
           { !this.state.started && !window.audioPlayer.paused ? (

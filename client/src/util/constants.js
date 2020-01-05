@@ -6,8 +6,8 @@ export default {
       IMAGE_ID: "haruki",
       IMAGE_PATH: process.env.PUBLIC_URL + "/images/haru.jpg",
       POS: [46.875, 550],
-      COLOR: "#e87b96",
-      // BACKGROUND_COLOR: "#876565",
+      // COLOR: "#e87b96",
+      COLOR: "#c43737",
       BACKGROUND_COLOR: "#805b5b",
 
     },
@@ -17,8 +17,8 @@ export default {
       IMAGE_ID: "uenoyama",
       IMAGE_PATH: process.env.PUBLIC_URL + "/images/ueno.jpg",
       POS: [140.625, 550],
-      COLOR: "#79a5ed",
-      // BACKGROUND_COLOR: "#656987",
+      // COLOR: "#79a5ed",
+      COLOR: "#345dcf",
       BACKGROUND_COLOR: "#5b6c80"
     },
     3: {
@@ -27,8 +27,8 @@ export default {
       IMAGE_ID: "mafuyu",
       IMAGE_PATH: process.env.PUBLIC_URL + "/images/mafu.jpg",
       POS: [234.375, 550],
-      COLOR: "#edb979",
-      // BACKGROUND_COLOR: "#8c785e",
+      // COLOR: "#edb979",
+      COLOR: "#db8535",
       BACKGROUND_COLOR: "#997f63",
 
     },
@@ -38,8 +38,8 @@ export default {
       IMAGE_ID: "akihiko",
       IMAGE_PATH: process.env.PUBLIC_URL + "/images/aki.jpg",
       POS: [328.125, 550],
-      COLOR: "#edeb79",
-      // BACKGROUND_COLOR: "#8c895e",
+      // COLOR: "#edeb79",
+      COLOR: "#dbd637",
       BACKGROUND_COLOR: "#989963",
 
     }

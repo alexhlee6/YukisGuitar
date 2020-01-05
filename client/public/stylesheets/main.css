@@ -6,6 +6,7 @@
 @import url('https://fonts.googleapis.com/css?family=Sintony&display=swap');
 @import url('https://fonts.googleapis.com/css?family=PT+Sans:400,700&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Cute+Font&display=swap');
 /* h2 {
   color: white;
   text-align: center;
@@ -33,12 +34,21 @@
   width: 100%;
   min-height: 100%;
   height: 100%;
+  background-image: url("https://prtimes.jp/i/16356/1783/origin/d16356-1783-310771-1.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* background-image: url("https://i.pinimg.com/originals/be/27/bf/be27bf8c89d941c56d0350e5ef5ee4f6.jpg");
+  background-size: cover;
+  background-repeat: no-repeat; */
 }
 
 .game-main {
   width: 100%;
   min-height: 100%;
   height: 100%;
+  background-image: url("https://i.pinimg.com/originals/be/27/bf/be27bf8c89d941c56d0350e5ef5ee4f6.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .stage-main {
@@ -75,6 +85,7 @@
   position: fixed;
   bottom: 0;
   overflow-y: hidden;
+  height: 100%;
 }
 
 .column-container {
@@ -87,10 +98,11 @@
   overflow-x: hidden;
   position: relative;
   bottom: 0;
+  height: 100%;
 }
 
 .column-1 .button-container {
-  border-top: 40px solid rgb(109, 39, 39);
+  border-top: 40px solid rgb(113, 34, 34);
 }
 
 .column-1 .button-container.pressed {
@@ -98,7 +110,7 @@
 }
 
 .column-2 .button-container {
-  border-top: 40px solid rgb(36, 50, 113);
+  border-top: 40px solid rgb(31, 42, 128);
 }
 
 .column-2 .button-container.pressed {
@@ -106,7 +118,7 @@
 }
 
 .column-3 .button-container {
-  border-top: 40px solid rgb(116, 68, 30);
+  border-top: 40px solid rgb(136, 71, 31);
 }
 
 .column-3 .button-container.pressed {
@@ -114,7 +126,7 @@
 }
 
 .column-4 .button-container {
-  border-top: 40px solid rgb(116, 113, 29);
+  border-top: 40px solid rgb(145, 135, 23)
 }
 
 .column-4 .button-container.pressed {
@@ -125,6 +137,7 @@
   max-width: 150px;
   max-height: 140px;
   position: relative;
+  font-family: "Cute Font";
 }
 
 .button-key-binding {
@@ -135,7 +148,7 @@
   text-shadow: 2px 2px 8px black, -1px -1px 8px black;
   background-color: rgba(0, 0, 0, 0.192);
   border: 6px solid rgb(77, 77, 77);
-  font-size: 50px;
+  font-size: 70px;
   text-align: center;
   display: flex;
   align-items: flex-end;
@@ -153,7 +166,15 @@
 }
 
 .button-key-binding >span {
-  margin-bottom: 5px;
+  border: 2px solid rgba(29, 29, 29, 0.201);
+  border-radius: 10px;
+  background-color: rgba(31, 31, 31, 0.65);
+  height: 50px;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(193, 193, 193);
 }
 
 .button {
@@ -166,7 +187,6 @@
 
 
 #show-score-playing {
-  /* opacity: 0;s */
   position: absolute;
   top: 0;
   height: 50%;
@@ -177,14 +197,12 @@
   color: white;
   font-size: 37;
   z-index: 5;
-  /* font-family: 'Staatliches'; */
   text-transform: uppercase;
   font-family: 'PT Sans', sans-serif;
   font-weight: bold;
 }
 
 #score-playing-inner {
-  /* margin-top: 200px; */
   color: rgb(138, 138, 138);
 }
 
@@ -207,7 +225,7 @@
   width: 250px;
   height: 320px;
   border: 1px solid rgb(0, 0, 0);
-  background-color: rgb(19, 19, 19);
+  background-color: rgb(0, 0, 0);
   border-radius: 10px;
   display: flex;
   justify-content: space-evenly;
@@ -215,6 +233,17 @@
   flex-direction: column;
   color: white;
   padding: 20px;
+  /* font-family: "Cute font"; */
+  animation: boxglow 2s ease-in-out infinite alternate;
+}
+
+@keyframes boxglow {
+  from {
+    box-shadow: 0px 0px 5px 5px rgb(237, 115, 115)
+  }
+  to {
+    box-shadow: 0px 0px 5px 5px rgb(223, 219, 114)
+  }
 }
 
 .stage-completed-container > h2 {
@@ -249,8 +278,18 @@
 
 .stage-complete-exit-button {
   cursor: pointer;
-  font-size: 25px;
-  color: lightgray;
+  font-size: 18px;
+  color: rgb(182, 182, 182);
+  font-weight: 600;
+}
+
+.stage-complete-exit-button > i {
+  margin-right: 10px;
+  
+}
+
+.stage-complete-exit-button:hover {
+  color: white;
 }
 
 .start-modal {
@@ -283,23 +322,57 @@
   font-size: 25px;
   cursor: pointer;
   margin: 20px;
-  width: 70px;
-  height: 65px;
+  width: 30px;
+  height: 120px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
 }
+
+.controls-container i:hover {
+  color: white;
+}
+
+.fa-angle-double-left {
+  font-size: 35px;
+}
+
+.controls-container .fa-play {
+  margin-bottom: 5px;
+  font-size: 22px;
+}
+
+.controls-container .fa-volume-up {
+  font-size: 22px;
+}
+
+.controls-container .fa-volume-off {
+  padding-right: 5px;
+}
+
+.score-count-module {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: white;
+  font-size: 45px;
+  z-index: 15;
+  margin-right: 18px;
+  margin-top: 8px;
+  font-family: "Cute Font", cursive;
+}
+
+
+
+
 
 /* STAGE SELECT */
 
 .stage-select-main {
-  background-image: url("https://prtimes.jp/i/16356/1783/origin/d16356-1783-310771-1.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
   width: 100%;
   height: 100%;
   min-height: 100%;
-  /* min-height: 100vh; */
   position: relative;
   top: 0;
 }
@@ -365,8 +438,10 @@
   margin-top: 5px;
   margin-bottom: 5px;
   font-weight: 600;
+  padding-bottom: 3px;
   /* font-weight: 400; */
   color: lightgray;
+  border-bottom: 2px solid rgba(211, 211, 211, 0.548);
 }
 
 .stage-select li {
@@ -386,6 +461,10 @@
   color: rgb(145, 145, 145);
 }
 .stage-select li:hover {
+  color: white;
+}
+
+.stage-select li:hover i {
   color: white;
 }
 

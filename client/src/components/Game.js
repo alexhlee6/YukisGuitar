@@ -16,33 +16,6 @@ class Game extends React.Component {
   componentDidMount() {
     this.restart();
     this.setState({loading: false});
-    let bodyh = document.body.clientHeight;
-    let windowh = window.innerHeight;
-
-    // $(window).on('resize', () => {
-    //   let bodyh = document.body.clientHeight;
-    //   $("html").height(bodyh + "px");
-    //   $("body").height(bodyh + "px");
-    //   $(".column-container").height(document.body.clientHeight + 'px');
-    //   $('.stage-select-main').height(document.body.clientHeight + 'px');
-    //   $(".stage-select-page-container").height(document.body.clientHeight + 'px');
-    // });
-
-    // const width = window.innerWidth || document.documentElement.clientWidth ||
-    //   document.body.clientWidth;
-    // const height = window.innerHeight || document.documentElement.clientHeight ||
-    //   document.body.clientHeight;
-
-    // window.onresize = () => {
-      // $("html").height(bodyh + "px");
-      // $("body").height(bodyh + "px");
-      // $(".column-container").height(document.body.clientHeight + 'px');
-      // $('.stage-select-main').height(document.body.clientHeight + 'px');
-      // $(".stage-select-page-container").height(document.body.clientHeight + 'px');
-    // }
-    
-    // $("html").height(window.innerHeight + "px");
-    // $("body").height(window.innerHeight + "px");
   }
 
   restart() {
@@ -53,14 +26,6 @@ class Game extends React.Component {
   }
 
   componentDidUpdate() {
-    if (window.audioPlayer) {
-      // let viewportHeight = 
-      $(".column-container").height(document.body.clientHeight + 'px');
-    }
-    if (!this.state.started && !this.state.loading) {
-      $('.stage-select-main').height(document.body.clientHeight + 'px');
-      $(".stage-select-page-container").height(document.body.clientHeight + 'px');
-    }
     // const width = window.innerWidth || document.documentElement.clientWidth ||
     //   document.body.clientWidth;
     // const height = window.innerHeight || document.documentElement.clientHeight ||
