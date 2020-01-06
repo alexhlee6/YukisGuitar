@@ -1,17 +1,20 @@
 # Yuki's Guitar
-**Yuki's Guitar** is a rhythm game similar to *Guitar Hero*, where players earn points by accurately pressing keys to the timing of the game prompts and music. 
 
-The game was inspired by the anime/manga series _**Given**_, and includes three songs from the anime as playable stages.
+#### [Live Link](http://yukisguitar.herokuapp.com)
+
+**Yuki's Guitar** is a rhythm game similar to *Guitar Hero*, where players earn points by accurately pressing keys to the timing of the game prompts and music. It was inspired by the anime/manga series _**Given**_, and includes three songs from the anime as playable stages!
+
+This project uses Javascript for the game logic, React for managing displayed components and player options (song choice, key bindings, score, etc.), and JS with Canvas for the columns and music notes animation.
 
 *Yuki's Guitar was created in one week for App Academy's Javascript curriculum.*
 
 ![Full1](/client/public/images/full1.png?raw=true)
 
-This project uses Javascript for game logic, React for managing rendered components and player options (song choice, key bindings, score, etc.), and HTML/Canvas for the animated music notes.
-
 ![Full2](/client/public/images/full2.png?raw=true)
 
-This game was designed to be responsive to different screen sizes and allow comfortable play on mobile devices.
+---
+
+This game was designed to be responsive to different screen sizes and allow comfortable play on mobile devices. ☺
 
 ![MobileView](/client/public/images/mobilecollage.png?raw=true)
 
@@ -21,7 +24,7 @@ This game was designed to be responsive to different screen sizes and allow comf
 
 ## Timing and Animating Music Notes
 
-The bulk of my difficulty for this project came from animating the music notes. 
+Most of my difficulty for this project came from animating and timing the music notes. 
 
 I decided to separate the game view into four columns (*one column for each main character* ☺) and gave each column its own canvas element, color, set of timestamps, and button. Each column was responsible for rendering and animating its music notes.
 
