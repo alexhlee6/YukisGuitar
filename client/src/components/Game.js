@@ -101,6 +101,7 @@ class Game extends React.Component {
                     <div>Alex Lee</div>
                     <a href="https://github.com/alex629lee"><i class="fab fa-github"></i> Github</a>
                     <a href="https://www.linkedin.com/in/alex-lee-b09a7310a/"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                    <a href="https://github.com/alex629lee/YukisGuitar"><i class="fab fa-github-square"></i> Git Repo</a>
                   </div>
                 </div>
                 <img className="info-module-given-pic"

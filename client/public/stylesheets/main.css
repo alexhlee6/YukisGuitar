@@ -59,6 +59,9 @@
   justify-content: flex-end;
   background: linear-gradient(black, transparent);
   position: relative;
+  -webkit-user-select: none; /* Chrome/Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
 }
 
 .stage-curtain {
@@ -137,6 +140,9 @@
   max-height: 140px;
   position: relative;
   font-family: "Cute Font";
+  -webkit-user-select: none; /* Chrome/Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
 }
 
 .button-key-binding {

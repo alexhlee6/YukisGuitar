@@ -65,7 +65,7 @@
 }
 
 .info-name-links > a{
-  margin-top: 10px;
+  margin-top: 15px;
   font-size: 20px;
   color: lightgray;
 }
@@ -75,7 +75,7 @@
 }
 
 .info-name-links > a:hover {
-  color: white;
+  color: white; 
 }
 
 .info-module-pic {
