@@ -39,9 +39,6 @@
   background-image: url("https://prtimes.jp/i/16356/1783/origin/d16356-1783-310771-1.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  /* background-image: url("https://i.pinimg.com/originals/be/27/bf/be27bf8c89d941c56d0350e5ef5ee4f6.jpg");
-  background-size: cover;
-  background-repeat: no-repeat; */
 }
 
 .game-main {
@@ -384,7 +381,7 @@
   width: 100%;
   min-height: 100%;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.434);
+  background-color: rgba(0, 0, 0, 0.3);
   color: white;
   font-family: 'PT Sans', sans-serif;
   display: flex;
@@ -420,7 +417,7 @@
   height: 480px;
   width: 400px;
   font-size: 30px;
-  background-color: rgba(0, 0, 0, 0.742);
+  background-color: rgba(0, 0, 0, 0.79);
 }
 
 .stage-select {

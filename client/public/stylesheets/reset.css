@@ -59,9 +59,10 @@ html,body {
 body {
   line-height: 1;
 	font-family: sans-serif;
-	background-color: white;
-	background-size: cover;
+	background-color: black;
+	background-image: url("https://prtimes.jp/i/16356/1783/origin/d16356-1783-310771-1.jpg");  
 	background-repeat: no-repeat;
+	background-size: cover;
 }
 
 #root {
