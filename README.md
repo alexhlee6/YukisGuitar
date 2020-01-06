@@ -1,4 +1,4 @@
-# Yuki's Guitar
+# Yuki's Guitar :guitar:
 
 ### **[Live Link](http://yukisguitar.herokuapp.com)**
 
