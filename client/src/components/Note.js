@@ -30,7 +30,7 @@ export default class Note {
   checkPos() {
     if (this.outOfBounds()) {
       this.parentColumn.removeMissedNote(this);
-    } // else if clicked (not out of bounds) then this.parentColumn.removeNote()
+    } 
   }
 
   moveNote(ctx) {
@@ -39,7 +39,7 @@ export default class Note {
   }
 
   drawNote(ctx) {
-    ctx.fillStyle = this.color; //this.color
+    ctx.fillStyle = this.color; 
     ctx.fillRect(this.x, this.y, this.dimensions.width, this.dimensions.height);
   }
 
@@ -53,8 +53,6 @@ export default class Note {
   }
 
   outOfBounds() {
-    const endY = 600;
     return (this.y > 700);
   }
-
 }

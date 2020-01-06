@@ -19,7 +19,7 @@ class Stage extends React.Component {
       allCtx: {},
       allColumns: {},
       loading: true,
-      stageComplete: false, //
+      stageComplete: false, 
       score: {
         totalPoints: 0,
         perfect: 0,

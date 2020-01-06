@@ -22,7 +22,6 @@ export default class Column {
     this.timeLogs = logs;
     this.startNotified = false;
     this.notifyStarted = notifyStarted;
-    // this.timeLogs = [...Log[colNum]];
     this.animate(ctx);
   }
 
