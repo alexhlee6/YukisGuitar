@@ -1,6 +1,6 @@
-# Yuki's Guitar
+# Yuki's Guitar :guitar:
 
-#### [Live Link](http://yukisguitar.herokuapp.com)
+### **[Live Link](http://yukisguitar.herokuapp.com)**
 
 **Yuki's Guitar** is a rhythm game similar to *Guitar Hero*, where players earn points by accurately pressing keys to the timing of the game prompts and music. It was inspired by the anime/manga series _**Given**_, and includes three songs from the anime as playable stages!
 
