@@ -8,6 +8,14 @@ This project uses Javascript for the game logic, React for managing displayed co
 
 *Yuki's Guitar was created in one week for App Academy's Javascript curriculum.*
 
+### Technologies/Libraries Used
+1. Javascript 
+2. HTML (with Canvas)
+3. CSS
+4. React
+5. JQuery
+6. MIDISoundsReact
+
 ![Full1](/client/public/images/full1.png?raw=true)
 
 ![Full2](/client/public/images/full2.png?raw=true)
@@ -126,29 +134,4 @@ checkPos() {
 * Display combos during game and award more points for a higher streak of perfect plays.
 * Have Eli set the timing of music notes because I'm rhythmically challenged...
 
----
-
-## Technologies/Libraries Used
-1. Javascript 
-2. HTML (with Canvas)
-3. CSS
-4. React
-5. JQuery
-6. MIDISoundsReact
-
-Possible challenges include timing the game prompts to correctly fall into position at the correct time and matching the prompts and player responses with the stage music.
-
-
----
-
-## MVP
-1. Players respond to the prompts either by pressing arrow keys or by tapping/clicking the gamepad buttons (mobile).
-1. Predetermined song(s) and keys used to calculate accuracy of player responses.
-1. Timing of key-presses are scored on a scale ("perfect", "good", "bad", "miss") with differing amounts of points awarded. 
-1. **Bonus:** Multiple stages with different songs; Selecting difficulty level
-
-
-## Wireframes 
-
-![Wireframe](/client/public/images/wireframe.png?raw=true)
 
