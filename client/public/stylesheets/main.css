@@ -397,7 +397,6 @@
 }
 
 .stage-select-page-title {
-  font-size: 49px;
   display: flex;
   align-items: center;
   font-weight: 600;
@@ -409,21 +408,31 @@
   flex-direction: column;
 }
 
-.stage-select-page-title > div {
+.stage-select-list li span {
+  margin-left: 10px;
+  font-size: 18px;
+  color: rgb(145, 145, 145);
+  transition: color 0.25s ease-in-out;
+}
+
+.stage-select-page-title > h1 {
   margin-bottom: 25px;
+  font-size: 48px;
 }
 
 .stage-select-page-title img {
   width: 90px;
   height: 90px;
-  margin-bottom: 43px;
+  margin-bottom: 30px;
+  margin-top: 20px;
 }
 
 .stage-select-container {
-  height: 480px;
+  height: 500px;
   width: 400px;
   font-size: 30px;
   background-color: rgba(0, 0, 0, 0.79);
+  position: relative;
 }
 
 .stage-select {
@@ -435,22 +444,22 @@
 }
 
 .stage-select > h2 {
-  font-size: 33px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  font-size: 30px;
+  margin-bottom: 8px;
   font-weight: 600;
   padding-bottom: 3px;
-  color: lightgray;
+  color: rgb(232, 232, 232);
   border-bottom: 2px solid rgba(211, 211, 211, 0.548);
 }
 
 .stage-select li {
-  margin: 15px 0px;
+  margin: 20px 0px;
   font-size: 25px;
   cursor: pointer;
   color: lightgray;
   display: flex;
   align-items: center;
+  transition: color 0.25s ease-in-out;
 }
 
 .stage-select i {
@@ -458,12 +467,17 @@
   margin-left: 10px;
   font-size: 15px;
   color: rgb(145, 145, 145);
+  transition: color 0.25s ease-in-out;
 }
 .stage-select li:hover {
   color: white;
 }
 
 .stage-select li:hover i {
+  color: white;
+}
+
+.stage-select li:hover span {
   color: white;
 }
 
@@ -524,6 +538,10 @@
   background-color: rgb(18, 18, 18);
 }
 
+.fa-times-circle {
+  z-index: 3;
+}
+
 
 
 
@@ -536,6 +554,13 @@
     align-items: center;
     justify-content: center;
     background-color: rgba(0, 0, 0, 0.495);
+  }
+
+  .stage-select-page-container > .fas {
+    left: 10px;
+    top: 10px;
+    z-index: 3;
+    width: max-content;
   }
 
   .stage-select-page-title {
