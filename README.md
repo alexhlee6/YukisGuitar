@@ -1,6 +1,6 @@
 # Yuki's Guitar :guitar:
 
-### **[Live Link](http://yukisguitar.herokuapp.com)**
+### **[Live Link](https://yukisguitar-c8ecb0e21612.herokuapp.com/)**
 
 **Yuki's Guitar** is a rhythm game similar to *Guitar Hero*, where players earn points by accurately pressing keys to the timing of the game prompts and music. It was inspired by the anime/manga series _**Given**_, and includes three songs from the anime as playable stages!
 
@@ -131,7 +131,7 @@ checkPos() {
 
 ## Future Directions
 * Add difficulty selection with greater number of buttons for hard mode.
-* Display combos during game and award more points for a higher streak of perfect plays.
+* ~~Display combo count (current number of consecutive notes rated good or better) during song play, and show the player's max combo in the score screen once game is completed~~ - Added 06/22/2023
 * Have Eli set the timing of music notes because I'm rhythmically challenged...
 
 
