@@ -1,7 +1,6 @@
 import React from 'react';
 import Game from "./components/Game";
 import MIDISounds from 'midi-sounds-react';
-import $ from "jquery";
 
 const App = () =>  {
   return (
@@ -18,7 +17,7 @@ function onElementHeightChange(elm, callback) {
   var lastHeight = elm.clientHeight, newHeight;
   (function run() {
     newHeight = elm.clientHeight;
-    if (lastHeight != newHeight)
+    if (lastHeight !== newHeight)
       callback(newHeight)
     lastHeight = newHeight
 

@@ -86,6 +86,8 @@ class Game extends React.Component {
         break;
       case "BOX":
         break;
+      default: 
+        console.log("No valid case provided")
     }
   }
 
@@ -111,7 +113,7 @@ class Game extends React.Component {
           How to Play <i className="fas fa-chevron-right"></i>
         </div>
         <div className="stage-select-page-title">
-          <img src={process.env.PUBLIC_URL + '/images/guitar1.png'} />
+          <img src={process.env.PUBLIC_URL + '/images/guitar1.png'}  alt="guitar" />
           <h1>YUKI'S GUITAR</h1>
         </div>
 
@@ -133,17 +135,17 @@ class Game extends React.Component {
             <div className="info-modal">
               <div className="info-module-container" onClick={() => this.handleInfoModule("BOX")}>
                 <div className="info-pic-name">
-                  <img className="info-module-pic" 
+                  {/* <img className="info-module-pic" 
                     src={process.env.PUBLIC_URL + '/images/me.jpg'}>
-                  </img>
+                  </img> */}
                   <div className="info-name-links">
                     <div>Alex Lee</div>
-                    <a href="https://github.com/alex629lee"><i class="fab fa-github"></i> Github</a>
-                    <a href="https://www.linkedin.com/in/alex-lee-b09a7310a/"><i class="fab fa-linkedin"></i> LinkedIn</a>
-                    <a href="https://github.com/alex629lee/YukisGuitar"><i class="fab fa-github-square"></i> Git Repo</a>
+                    <a href="https://github.com/alexhlee6"><i className="fab fa-github"></i> Github</a>
+                    <a href="https://www.linkedin.com/in/alexhlee6/"><i className="fab fa-linkedin"></i> LinkedIn</a>
+                    <a href="https://github.com/alexhlee6/YukisGuitar"><i className="fab fa-github-square"></i> Git Repo</a>
                   </div>
                 </div>
-                <img className="info-module-given-pic"
+                <img className="info-module-given-pic"  alt="given anime"
                   src={process.env.PUBLIC_URL + '/images/given-transparent.png'}>
                 </img>
               </div>

@@ -101,6 +101,12 @@
   position: relative;
   bottom: 0;
   height: 100%;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+  overflow-y: hidden;
+}
+.column-container::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
 }
 
 .column-1 .button-container {
@@ -204,6 +210,8 @@
   font-size: 37;
   z-index: 5;
   text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
   /* font-family: 'PT Sans', sans-serif; */
   font-family: "Roboto Condensed";
   font-weight: bold;
@@ -211,6 +219,18 @@
 
 #score-playing-inner {
   color: rgb(138, 138, 138);
+}
+#show-score-combo {
+  color: white;
+  font-size: 25px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0.9;
+}
+#show-score-combo h3 {
+  font-size: 25px;
 }
 
 .stage-completed-modal {

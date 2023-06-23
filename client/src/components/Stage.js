@@ -3,6 +3,7 @@ import Column from "./Column";
 import $ from "jquery";
 import { postLog, getLog } from "../util/api_util";
 import CONSTANTS from "../util/constants";
+import debounce from 'lodash.debounce';
 const { SONG_URLS } = CONSTANTS; 
 
 class Stage extends React.Component {
@@ -25,6 +26,10 @@ class Stage extends React.Component {
         perfect: 0,
         good: 0,
         bad: 0,
+      },
+      combo: {
+        current: 0,
+        max: 0
       },
       muted: false,
       misses: 0,
@@ -78,7 +83,9 @@ class Stage extends React.Component {
     window.audioPlayer.volume = 0.4;
     window.audioPlayer.addEventListener("ended", () => {
       this.pauseColumns();
-      this.setState({ stageComplete: true });
+      let newComboState = Object.assign({},this.state.combo);
+      newComboState.current = 0;
+      this.setState({ stageComplete: true, combo:newComboState });
       window.audioPlayer = null;
       $("#stage-completed-modal").animate({ opacity: 1 }, 500);
     })
@@ -217,6 +224,25 @@ class Stage extends React.Component {
     }
   }
 
+  updateComboCounts(missedNote=false) {
+    const newComboState = Object.assign({},this.state.combo);
+
+    if (missedNote) {
+      const currentCombo = newComboState.current; 
+      const currMax = newComboState.max;
+      newComboState.max = Math.max(currentCombo, currMax);
+      newComboState.current = 0; 
+    } else {
+      newComboState.current += 1;
+      newComboState.max = Math.max(newComboState.max, newComboState.current);
+    }
+
+    this.setState({ combo: newComboState });
+
+    let comboEl = document.getElementById("score-playing-combo");
+    comboEl.innerHTML = newComboState.current > 0 ? `${newComboState.current}` : "0"; 
+  }
+
   checkScore(colNum) {
     let column = this.state.allColumns[colNum];
     let colNotes = column.allNotes;
@@ -234,13 +260,8 @@ class Stage extends React.Component {
       newScoreState["perfect"] = perfectCount + 1;
       newScoreState["totalPoints"] = pointsEarned;
       this.setState({ score: newScoreState });
-      let showScore = document.getElementById("score-playing-inner");
-      showScore.innerHTML = "Perfect";
-      $("#score-playing-inner").css("color", "springgreen");
-      $("#score-playing-inner").animate({opacity: 0.5}, 200);
-      setTimeout(() => {
-        $("#score-playing-inner").animate({opacity: 0}, 200);
-      }, 200)
+      this.updateComboCounts();
+      this.handleScoreAnimation("Perfect", "springgreen");
     } else if (noteY >= 560 && noteY <= 640) {
       pointsEarned += 2;
       column.removeNote(colNotes[0]);
@@ -249,13 +270,8 @@ class Stage extends React.Component {
       newScoreState["good"] = goodCount + 1;
       newScoreState["totalPoints"] = pointsEarned;
       this.setState({ score: newScoreState });
-      let showScore = document.getElementById("score-playing-inner");
-      showScore.innerHTML = "Good";
-      $("#score-playing-inner").css("color", "yellow");
-      $("#score-playing-inner").animate({ opacity: 0.5 }, 200);
-      setTimeout(() => {
-        $("#score-playing-inner").animate({ opacity: 0 }, 200);
-      }, 200)
+      this.updateComboCounts();
+      this.handleScoreAnimation("Good", "yellow");
     } else if (noteY >= 500 && noteY <= 700 ) {
       pointsEarned += 1;
       column.removeNote(colNotes[0]);
@@ -264,22 +280,27 @@ class Stage extends React.Component {
       newScoreState["bad"] = badCount + 1;
       newScoreState["totalPoints"] = pointsEarned;
       this.setState({ score: newScoreState });
-      let showScore = document.getElementById("score-playing-inner");
-      showScore.innerHTML = "Bad";
-      $("#score-playing-inner").css("color", "blue");
-      $("#score-playing-inner").animate({ opacity: 0.5 }, 200);
-      setTimeout(() => {
-        $("#score-playing-inner").animate({ opacity: 0 }, 200);
-      }, 200)
+      this.updateComboCounts(true);
+      this.handleScoreAnimation("Bad", "blue");
     }
   }
 
-  // handleShowScore(word, color) {
-  //   let showScore = document.getElementById("score-playing-inner");
-  //   showScore.innerHTML = word;
-  //   $("#score-playing-inner").css("color", color);
-  //   $("#score-playing-inner").animate({ opacity: 0.5 }, 200);
-  // }
+  hideNodeRating = debounce(
+    () => {
+      setTimeout(() => {
+        $("#score-playing-inner").animate({ opacity: 0 }, 200);
+      }, 300)
+    }, 700
+  );
+
+  handleScoreAnimation(text, color) {
+    let showScore = document.getElementById("score-playing-inner");
+    showScore.innerHTML = text;
+    $("#score-playing-inner").css("color", color);
+    $("#score-playing-inner").animate({ opacity: 0.8 }, 100);
+
+    this.hideNodeRating();
+  }
 
   notifyMiss() {
     let missCount = this.state.misses;
@@ -290,13 +311,8 @@ class Stage extends React.Component {
     }
     newScore["totalPoints"] = newTotal;
     this.setState({ misses: missCount + 1, score: newScore });
-    let showScore = document.getElementById("score-playing-inner");
-    showScore.innerHTML = "Miss";
-    $("#score-playing-inner").css("color", "darkred");
-    $("#score-playing-inner").animate({ opacity: 0.5 }, 200);
-    setTimeout(() => {
-      $("#score-playing-inner").animate({ opacity: 0 }, 200);
-    }, 200)
+    this.updateComboCounts(true);
+    this.handleScoreAnimation("Miss", "darkred");
   }
 
   findScore() {
@@ -328,10 +344,16 @@ class Stage extends React.Component {
         <div className="stage-complete-info">
           { grade }
           <div className="stage-complete-counts">
-            <p><span>Perfect:</span> {this.state.score.perfect}</p>
-            <p><span>Good:</span> {this.state.score.good}</p>
-            <p><span>Bad:</span> {this.state.score.bad}</p>
-            <p><span>Misses:</span> {this.state.misses}</p>
+            <p class="stage-complete-combo">
+              Max Combo: 
+              <span class="stage-complete-combo-count" style={{ marginLeft: "10px" }}>
+                {this.state.combo.max}
+              </span>
+            </p>
+            <p style={{ color: "springgreen" }}><span>Perfect:</span> {this.state.score.perfect}</p>
+            <p style={{ color: "gold" }}><span>Good:</span> {this.state.score.good}</p>
+            <p style={{ color: "dodgerblue" }}><span>Bad:</span> {this.state.score.bad}</p>
+            <p style={{ color: "firebrick" }}><span>Miss:</span> {this.state.misses}</p>
           </div>
         </div>
         <div 
@@ -476,7 +498,14 @@ class Stage extends React.Component {
             <div className='loader'>Loading...</div>
           ) : ( null )}
         </div>
-        <div id="show-score-playing"><p id="score-playing-inner" style={{fontSize: 40}}></p></div>
+        <div id="show-score-playing">
+          <p id="score-playing-inner" style={{fontSize: 40}}></p>
+          <div id="show-score-combo" style={{opacity: this.state.combo.current > 0 ? 0.8 : 0}}>
+            <h5>Combo</h5>
+            <p id="score-playing-combo" style={{fontSize: 40}}></p>
+          </div>
+        </div>
+       
         <audio id="audio-player" src={this.state.songUrl}></audio>
         {
           this.state.loading ? (
@@ -496,7 +525,7 @@ class Stage extends React.Component {
                     className="button-key-binding" id="key-1">
                       {this.state.keys ? <span id="key-span-1">{this.state.keys[1][1]}</span> : null}
                   </div>
-                  <img className="button" src={ process.env.PUBLIC_URL + '/images/haru.jpg' } />
+                  <img className="button" src={ process.env.PUBLIC_URL + '/images/haru.jpg' } alt="given haruki" />
                 </div>
               </div>
               <div className="column-container column-2">
@@ -508,7 +537,7 @@ class Stage extends React.Component {
                     <div className="button-key-binding" id="key-2">
                       {this.state.keys ? <span id="key-span-2">{this.state.keys[2][1]}</span> : null}
                     </div>
-                  <img className="button" src={process.env.PUBLIC_URL + '/images/ueno.jpg'} />
+                  <img className="button" src={process.env.PUBLIC_URL + '/images/ueno.jpg'}  alt="given uenoyama" />
                 </div>
               </div>
               <div className="column-container column-3">
@@ -520,7 +549,7 @@ class Stage extends React.Component {
                   <div className="button-key-binding" id="key-3">
                       {this.state.keys ? <span id="key-span-3">{this.state.keys[3][1]}</span> : null}
                   </div>
-                  <img className="button" src={process.env.PUBLIC_URL + '/images/mafu.jpg'} />
+                  <img className="button" src={process.env.PUBLIC_URL + '/images/mafu.jpg'}  alt="given mafuyu" />
                 </div>
               </div>
               <div className="column-container column-4">
@@ -532,7 +561,7 @@ class Stage extends React.Component {
                   <div className="button-key-binding" id="key-4">
                       {this.state.keys ? <span id="key-span-4">{this.state.keys[4][1]}</span> : null}
                   </div>
-                  <img className="button" src={process.env.PUBLIC_URL + '/images/aki.jpg'} />
+                  <img className="button" src={process.env.PUBLIC_URL + '/images/aki.jpg'} alt="given akihiko"/>
                 </div>
               </div>
             </div>
